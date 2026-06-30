@@ -5,6 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>利峰機械 - 行動整合工作台</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="利峰工作台">
+    <link rel="apple-touch-icon" href="icon-192.png">
+
+    <script>
+    // 註冊 Service Worker 啟用 PWA 功能
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js')
+                .then(reg => console.log('利峰工作台 PWA 註冊成功！'))
+                .catch(err => console.log('註冊失敗：', err));
+        });
+    }
+    </script>
+    
     <style>
         /* 基礎樣式重設 */
         * {
