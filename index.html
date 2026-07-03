@@ -62,7 +62,7 @@
             color: #94a3b8;
         }
 
-        /* 返回按鈕 (預設隱藏) */
+        /* 返回按鈕 */
         .back-btn {
             position: absolute;
             left: 15px;
@@ -77,7 +77,7 @@
             display: none;
         }
 
-        /* 主內容區：首頁九宮格 (預設顯示) */
+        /* 主內容區：首頁九宮格 */
         #main-menu {
             flex: 1;
             padding: 20px;
@@ -158,7 +158,7 @@
         }
 
         /* ----------------------------------------- */
-        /* 💡 新增：生產排程呈現畫面樣式 (預設隱藏) */
+        /* 生產排程呈現畫面樣式 */
         /* ----------------------------------------- */
         #schedule-view {
             display: none;
@@ -169,7 +169,7 @@
             width: 100%;
         }
 
-        /* 群組外框（類似 Access 的群組區段） */
+        /* 群組外框 */
         .group-container {
             background-color: #1e293b;
             border: 1px solid #334155;
@@ -179,7 +179,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        /* 群組頁首標題（月份排序 / 共幾台） */
+        /* 群組頁首標題 */
         .group-header {
             background: linear-gradient(90deg, #1e40af, #1e293b);
             padding: 10px 15px;
@@ -204,7 +204,7 @@
             font-weight: bold;
         }
 
-        /* 響應式工單表格樣式 */
+        /* 表格樣式 */
         .schedule-table {
             width: 100%;
             border-collapse: collapse;
@@ -224,14 +224,21 @@
             padding: 12px 10px;
             border-bottom: 1px solid #1e293b;
             vertical-align: middle;
+            word-break: break-all; /* 💡 確保規格型號太長時會自動換行不擠壓 */
         }
 
-        /* 讓表格橫列有交替底色，方便肉眼閱讀 */
+        /* 重點欄位「規格型號」視覺加強 */
+        .spec-highlight {
+            color: #fca5a5; /* 💡 採用淡紅色文字，讓重點規格一眼突出 */
+            font-weight: 500;
+        }
+
+        /* 表格橫列交替底色 */
         .schedule-table tr:nth-child(even) {
             background-color: #24334d;
         }
 
-        /* 工令號高亮圓角樣式 */
+        /* 工令號標籤 */
         .badge-id {
             background-color: #334155;
             color: #38bdf8;
@@ -241,17 +248,17 @@
             font-weight: bold;
         }
 
-        /* 針對手機畫面的排版最佳化 (隱藏次要欄位、改為卡片感) */
+        /* 手機端畫面寬度調整控制（💡 已移除隱藏規格設定，全面強制保留顯示） */
         @media (max-width: 600px) {
-            .schedule-table th:nth-child(3), 
-            .schedule-table td:nth-child(3) { display: none; } /* 手機端隱藏鍋爐規格 */
-            
-            .schedule-table font-size: 0.85rem;
+            .schedule-table {
+                font-size: 0.85rem;
+            }
+            .schedule-table th, .schedule-table td {
+                padding: 10px 6px;
+            }
         }
 
-        /* ----------------------------------------- */
         /* 彈出遮罩層 (Modal) 樣式 */
-        /* ----------------------------------------- */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -265,14 +272,8 @@
             pointer-events: none;
             transition: opacity 0.3s ease;
         }
-
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-content {
-            background-color: #1e293b; width: 100%; max-width: 600px;
-            border-top-left-radius: 24px; border-top-right-radius: 24px;
-            padding: 30px 20px; transform: translateY(100%);
-            transition: transform 0.3s cubic-bezier(0.1, 0.76, 0.55, 0.94);
-        }
+        .modal-content { background-color: #1e293b; width: 100%; max-width: 600px; border-top-left-radius: 24px; border-top-right-radius: 24px; padding: 30px 20px; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.1, 0.76, 0.55, 0.94); }
         .modal-overlay.active .modal-content { transform: translateY(0); }
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 10px; border-bottom: 1px solid #334155; }
         .modal-header h2 { font-size: 1.2rem; color: #38bdf8; display: flex; align-items: center; gap: 10px; }
@@ -295,6 +296,7 @@
 
     <!-- 📱 第一頁：主功能九宮格選單 -->
     <main id="main-menu">
+        <!-- 💡 標題已修正為：生產調度看板 -->
         <div class="tile-btn dashboard-btn" onclick="showSchedule()">
             <div class="icon-wrapper">
                 <i class="fa-solid fa-table-list"></i>
@@ -352,7 +354,7 @@
         </div>
     </main>
 
-    <!-- 📊 第二頁：純 HTML 生產排程呈現畫面（完美模擬 Access 報表群組） -->
+    <!-- 📊 第二頁：生產排程呈現畫面（💡 規格型號欄位全畫面強制保留且高亮） -->
     <section id="schedule-view">
         
         <!-- 【群組 1】 -->
@@ -364,27 +366,27 @@
             <table class="schedule-table">
                 <thead>
                     <tr>
-                        <th>工令號</th>
-                        <th>客戶/標題</th>
-                        <th>規格型號</th>
-                        <th>工作項目</th>
-                        <th>交貨日期</th>
+                        <th width="15%">工令號</th>
+                        <th width="25%">客戶/標題</th>
+                        <th width="25%">規格型號</th>
+                        <th width="20%">工作項目</th>
+                        <th width="15%">交期</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td><span class="badge-id">26018</span></td>
                         <td>銓宏(泰國勝宏)2</td>
-                        <td>650萬(臥式)</td>
+                        <td><span class="spec-highlight">650萬(臥式)</span></td>
                         <td>捲內管圈</td>
-                        <td>2026/08/30</td>
+                        <td>08/30</td>
                     </tr>
                     <tr>
                         <td><span class="badge-id">26019</span></td>
                         <td>銓宏(越南勝宏)1</td>
-                        <td>650萬(臥式)</td>
+                        <td><span class="spec-highlight">650萬(臥式)</span></td>
                         <td>捲內管圈</td>
-                        <td>2026/09/30</td>
+                        <td>09/30</td>
                     </tr>
                 </tbody>
             </table>
@@ -401,9 +403,9 @@
                     <tr>
                         <td width="15%"><span class="badge-id">26029</span></td>
                         <td width="25%">銓宏(中山台北)1</td>
-                        <td width="20%">250萬(臥式)</td>
+                        <td width="25%"><span class="spec-highlight">250萬(臥式)</span></td>
                         <td width="20%">捲內管圈</td>
-                        <td width="20%">2026/09/30</td>
+                        <td width="15%">09/30</td>
                     </tr>
                 </tbody>
             </table>
@@ -420,9 +422,9 @@
                     <tr>
                         <td width="15%"><span class="badge-id">26029</span></td>
                         <td width="25%">銓宏(中山台北)1</td>
-                        <td width="20%">250萬(臥式)</td>
+                        <td width="25%"><span class="spec-highlight">250萬(臥式)</span></td>
                         <td width="20%">捲外管圈</td>
-                        <td width="20%">2026/09/30</td>
+                        <td width="15%">09/30</td>
                     </tr>
                 </tbody>
             </table>
@@ -439,16 +441,16 @@
                     <tr>
                         <td width="15%"><span class="badge-id">26032</span></td>
                         <td width="25%">銓宏(中山台北)4</td>
-                        <td width="20%">400萬(臥式)</td>
+                        <td width="25%"><span class="spec-highlight">400萬(臥式)</span></td>
                         <td width="20%">捲內管圈</td>
-                        <td width="20%">2026/09/30</td>
+                        <td width="15%">09/30</td>
                     </tr>
                     <tr>
                         <td><span class="badge-id">26031</span></td>
                         <td>銓宏(中山台北)2</td>
-                        <td>400萬(臥式)</td>
+                        <td><span class="spec-highlight">400萬(臥式)</span></td>
                         <td>捲內管圈</td>
-                        <td>2026/09/30</td>
+                        <td>09/30</td>
                     </tr>
                 </tbody>
             </table>
@@ -465,16 +467,16 @@
                     <tr>
                         <td width="15%"><span class="badge-id">26032</span></td>
                         <td width="25%">銓宏(中山台北)4</td>
-                        <td width="20%">400萬(臥式)</td>
+                        <td width="25%"><span class="spec-highlight">400萬(臥式)</span></td>
                         <td width="20%">捲外管圈</td>
-                        <td width="20%">2026/09/30</td>
+                        <td width="15%">09/30</td>
                     </tr>
                     <tr>
                         <td><span class="badge-id">26031</span></td>
                         <td>銓宏(中山台北)2</td>
-                        <td>400萬(臥式)</td>
+                        <td><span class="spec-highlight">400萬(臥式)</span></td>
                         <td>捲外管圈</td>
-                        <td>2026/09/30</td>
+                        <td>09/30</td>
                     </tr>
                 </tbody>
             </table>
@@ -519,7 +521,8 @@
         document.getElementById('main-menu').style.display = 'none';
         document.getElementById('schedule-view').style.display = 'block';
         document.getElementById('btnBack').style.display = 'block';
-        document.getElementById('header-title').innerText = '生產進度調度看板';
+        // 💡 點擊進入後，上方主大標題同步更新為：生產調度看板
+        document.getElementById('header-title').innerText = '生產調度看板';
     }
 
     function showMenu() {
