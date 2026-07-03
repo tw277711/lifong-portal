@@ -13,7 +13,6 @@
     <link rel="apple-touch-icon" href="icon-192.png">
 
     <script>
-    // 註冊 Service Worker 啟用 PWA 功能
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('sw.js')
@@ -29,12 +28,12 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            -webkit-tap-highlight-color: transparent; /* 移除手機點擊陰影 */
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
-            background-color: #0f172a; /* 深藍底色，專業且省電 */
+            background-color: #0f172a; /* 深藍底色 */
             color: #f8fafc;
             display: flex;
             flex-direction: column;
@@ -48,6 +47,7 @@
             text-align: center;
             border-bottom: 2px solid #38bdf8;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
 
         header h1 {
@@ -62,12 +62,27 @@
             color: #94a3b8;
         }
 
-        /* 主內容區：九宮格網格 */
-        main {
+        /* 返回按鈕 (預設隱藏) */
+        .back-btn {
+            position: absolute;
+            left: 15px;
+            top: 25px;
+            background: #334155;
+            color: #f8fafc;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: none;
+        }
+
+        /* 主內容區：首頁九宮格 (預設顯示) */
+        #main-menu {
             flex: 1;
             padding: 20px;
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 手機端單排 2 個按鈕，最容易點擊 */
+            grid-template-columns: repeat(2, 1fr);
             gap: 15px;
             align-content: start;
             max-width: 600px;
@@ -75,14 +90,13 @@
             width: 100%;
         }
 
-        /* 針對平板或大螢幕自動變為 3 排 */
         @media (min-width: 450px) {
-            main {
+            #main-menu {
                 grid-template-columns: repeat(3, 1fr);
             }
         }
 
-        /* 磁貼大按鈕樣式 */
+        /* 大按鈕樣式 */
         .tile-btn {
             background-color: #1e293b;
             border: 1px solid #334155;
@@ -96,18 +110,15 @@
             color: #f8fafc;
             transition: all 0.2s ease;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
-            position: relative;
             cursor: pointer;
         }
 
-        /* 手機按壓時的動態反饋 */
         .tile-btn:active {
             transform: scale(0.95);
             background-color: #334155;
             border-color: #38bdf8;
         }
 
-        /* 圖標外圈 */
         .icon-wrapper {
             width: 55px;
             height: 55px;
@@ -118,35 +129,25 @@
             justify-content: center;
             margin-bottom: 12px;
             font-size: 1.5rem;
-            color: #38bdf8; /* 圖標主顏色 */
+            color: #38bdf8;
         }
 
-        /* 核心系統特別亮色突顯 */
-        .tile-btn.highlight .icon-wrapper {
-            background-color: #38bdf8;
-            color: #0f172a;
-        }
-
-        /* 💡 看板專屬樣式突顯：採用黃橙色與特殊發光邊框，讓管理者一眼看到 */
+        /* 看板專屬黃金按鈕識別 */
         .tile-btn.dashboard-btn .icon-wrapper {
             background-color: #eab308; 
             color: #0f172a;
         }
         .tile-btn.dashboard-btn {
             border: 1px solid #eab308;
-            box-shadow: 0 0 10px rgba(234, 179, 8, 0.2);
         }
-        .tile-btn.dashboard-btn:active {
-            background-color: #eab308;
+
+        .tile-btn.highlight .icon-wrapper {
+            background-color: #38bdf8;
             color: #0f172a;
         }
 
-        /* 「設計」按鈕專屬樣式突顯 */
         .tile-btn.design-btn .icon-wrapper {
-            color: #a855f7; /* 紫色識別，區隔一般系統 */
-        }
-        .tile-btn.design-btn:active {
-            border-color: #a855f7;
+            color: #a855f7;
         }
 
         .tile-btn span {
@@ -156,126 +157,150 @@
             line-height: 1.3;
         }
 
+        /* ----------------------------------------- */
+        /* 💡 新增：生產排程呈現畫面樣式 (預設隱藏) */
+        /* ----------------------------------------- */
+        #schedule-view {
+            display: none;
+            flex: 1;
+            padding: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* 群組外框（類似 Access 的群組區段） */
+        .group-container {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        /* 群組頁首標題（月份排序 / 共幾台） */
+        .group-header {
+            background: linear-gradient(90deg, #1e40af, #1e293b);
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #334155;
+        }
+
+        .group-tag {
+            background-color: #fdba74; /* 橘黃色高亮標籤 */
+            color: #1e293b;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .group-qty {
+            color: #38bdf8;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        /* 響應式工單表格樣式 */
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .schedule-table th {
+            background-color: #0f172a;
+            color: #94a3b8;
+            padding: 10px;
+            font-weight: 500;
+            border-bottom: 1px solid #334155;
+        }
+
+        .schedule-table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #1e293b;
+            vertical-align: middle;
+        }
+
+        /* 讓表格橫列有交替底色，方便肉眼閱讀 */
+        .schedule-table tr:nth-child(even) {
+            background-color: #24334d;
+        }
+
+        /* 工令號高亮圓角樣式 */
+        .badge-id {
+            background-color: #334155;
+            color: #38bdf8;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        /* 針對手機畫面的排版最佳化 (隱藏次要欄位、改為卡片感) */
+        @media (max-width: 600px) {
+            .schedule-table th:nth-child(3), 
+            .schedule-table td:nth-child(3) { display: none; } /* 手機端隱藏鍋爐規格 */
+            
+            .schedule-table font-size: 0.85rem;
+        }
+
+        /* ----------------------------------------- */
         /* 彈出遮罩層 (Modal) 樣式 */
+        /* ----------------------------------------- */
         .modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(15, 23, 42, 0.85); /* 暗色背景遮罩 */
-            backdrop-filter: blur(5px); /* 背景模糊特效 */
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(5px);
             display: flex;
             justify-content: center;
-            align-items: flex-end; /* 手機版從底部彈出最順手 */
+            align-items: flex-end;
             z-index: 1000;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.3s ease;
         }
 
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
         .modal-content {
-            background-color: #1e293b;
-            width: 100%;
-            max-width: 600px;
-            border-top-left-radius: 24px;
-            border-top-right-radius: 24px;
-            padding: 30px 20px;
-            box-shadow: 0 -10px 25px -5px rgba(0, 0, 0, 0.5);
-            transform: translateY(100%);
+            background-color: #1e293b; width: 100%; max-width: 600px;
+            border-top-left-radius: 24px; border-top-right-radius: 24px;
+            padding: 30px 20px; transform: translateY(100%);
             transition: transform 0.3s cubic-bezier(0.1, 0.76, 0.55, 0.94);
         }
-
-        .modal-overlay.active .modal-content {
-            transform: translateY(0);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #334155;
-        }
-
-        .modal-header h2 {
-            font-size: 1.2rem;
-            color: #38bdf8;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            color: #94a3b8;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 5px;
-        }
-
-        /* 次層圖面清單樣式 */
-        .sub-menu-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .sub-menu-item {
-            background-color: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 12px;
-            padding: 18px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            text-decoration: none;
-            color: #f8fafc;
-            font-weight: 500;
-            font-size: 1.05rem;
-            transition: all 0.2s;
-        }
-
-        .sub-menu-item i.item-icon {
-            color: #a855f7;
-            margin-right: 15px;
-            font-size: 1.2rem;
-        }
-
-        .sub-menu-item i.arrow-icon {
-            color: #64748b;
-            font-size: 0.9rem;
-        }
-
-        .sub-menu-item:active {
-            background-color: #334155;
-            border-color: #a855f7;
-            transform: scale(0.98);
-        }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 10px; border-bottom: 1px solid #334155; }
+        .modal-header h2 { font-size: 1.2rem; color: #38bdf8; display: flex; align-items: center; gap: 10px; }
+        .close-btn { background: none; border: none; color: #94a3b8; font-size: 1.5rem; cursor: pointer; padding: 5px; }
+        .sub-menu-list { display: flex; flex-direction: column; gap: 12px; }
+        .sub-menu-item { background-color: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; color: #f8fafc; font-weight: 500; transition: all 0.2s; }
+        .sub-menu-item i.item-icon { color: #a855f7; margin-right: 15px; font-size: 1.2rem; }
+        .sub-menu-item i.arrow-icon { color: #64748b; font-size: 0.9rem; }
+        .sub-menu-item:active { background-color: #334155; border-color: #a855f7; transform: scale(0.98); }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>利峰行動工作台</h1>
+    <!-- 左側返回首頁按鈕 -->
+    <button class="back-btn" id="btnBack" onclick="showMenu()"><i class="fa-solid fa-arrow-left"></i> 返回</button>
+    <h1 id="header-title">利峰行動工作台</h1>
     <p><i class="fa-solid fa-circle-user"></i> 歡迎使用</p>
 </header>
 
-    <main>
-        <!-- 💡 點擊直達管理者排程看板 (已預先綁定您的專案網址) -->
-        <a href="https://datastudio.google.com/u/0/reporting/8cef5032-8d11-4ae0-a1d2-a925ebf6a55e" class="tile-btn dashboard-btn">
+    <!-- 📱 第一頁：主功能九宮格選單 -->
+    <main id="main-menu">
+        <div class="tile-btn dashboard-btn" onclick="showSchedule()">
             <div class="icon-wrapper">
-                <i class="fa-solid fa-chart-gantt"></i>
+                <i class="fa-solid fa-table-list"></i>
             </div>
             <span>生產調度看板</span>
-        </a>
+        </div>
 
         <a href="https://apps.powerapps.com/play/e/default-3e94ccc2-1343-416a-84fc-b26340a644f5/a/685f6eb5-cc13-4019-8156-e0a7868f8982?tenantId=3e94ccc2-1343-416a-84fc-b26340a644f5&hint=8d2e52bf-ba23-4745-a8b7-31511aaeb683&sourcetime=1782786065971" class="tile-btn">
             <div class="icon-wrapper">
@@ -327,6 +352,137 @@
         </div>
     </main>
 
+    <!-- 📊 第二頁：純 HTML 生產排程呈現畫面（完美模擬 Access 報表群組） -->
+    <section id="schedule-view">
+        
+        <!-- 【群組 1】 -->
+        <div class="group-container">
+            <div class="group-header">
+                <span class="group-tag">7月序1</span>
+                <span class="group-qty">共 2 台</span>
+            </div>
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>工令號</th>
+                        <th>客戶/標題</th>
+                        <th>規格型號</th>
+                        <th>工作項目</th>
+                        <th>交貨日期</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="badge-id">26018</span></td>
+                        <td>銓宏(泰國勝宏)2</td>
+                        <td>650萬(臥式)</td>
+                        <td>捲內管圈</td>
+                        <td>2026/08/30</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge-id">26019</span></td>
+                        <td>銓宏(越南勝宏)1</td>
+                        <td>650萬(臥式)</td>
+                        <td>捲內管圈</td>
+                        <td>2026/09/30</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 【群組 2】 -->
+        <div class="group-container">
+            <div class="group-header">
+                <span class="group-tag">7月序4</span>
+                <span class="group-qty">共 1 台</span>
+            </div>
+            <table class="schedule-table">
+                <tbody>
+                    <tr>
+                        <td width="15%"><span class="badge-id">26029</span></td>
+                        <td width="25%">銓宏(中山台北)1</td>
+                        <td width="20%">250萬(臥式)</td>
+                        <td width="20%">捲內管圈</td>
+                        <td width="20%">2026/09/30</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 【群組 3】 -->
+        <div class="group-container">
+            <div class="group-header">
+                <span class="group-tag">8月序1</span>
+                <span class="group-qty">共 1 台</span>
+            </div>
+            <table class="schedule-table">
+                <tbody>
+                    <tr>
+                        <td width="15%"><span class="badge-id">26029</span></td>
+                        <td width="25%">銓宏(中山台北)1</td>
+                        <td width="20%">250萬(臥式)</td>
+                        <td width="20%">捲外管圈</td>
+                        <td width="20%">2026/09/30</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 【群組 4】 -->
+        <div class="group-container">
+            <div class="group-header">
+                <span class="group-tag">8月序2</span>
+                <span class="group-qty">共 2 台</span>
+            </div>
+            <table class="schedule-table">
+                <tbody>
+                    <tr>
+                        <td width="15%"><span class="badge-id">26032</span></td>
+                        <td width="25%">銓宏(中山台北)4</td>
+                        <td width="20%">400萬(臥式)</td>
+                        <td width="20%">捲內管圈</td>
+                        <td width="20%">2026/09/30</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge-id">26031</span></td>
+                        <td>銓宏(中山台北)2</td>
+                        <td>400萬(臥式)</td>
+                        <td>捲內管圈</td>
+                        <td>2026/09/30</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 【群組 5】 -->
+        <div class="group-container">
+            <div class="group-header">
+                <span class="group-tag">8月序3</span>
+                <span class="group-qty">共 2 台</span>
+            </div>
+            <table class="schedule-table">
+                <tbody>
+                    <tr>
+                        <td width="15%"><span class="badge-id">26032</span></td>
+                        <td width="25%">銓宏(中山台北)4</td>
+                        <td width="20%">400萬(臥式)</td>
+                        <td width="20%">捲外管圈</td>
+                        <td width="20%">2026/09/30</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge-id">26031</span></td>
+                        <td>銓宏(中山台北)2</td>
+                        <td>400萬(臥式)</td>
+                        <td>捲外管圈</td>
+                        <td>2026/09/30</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </section>
+
+    <!-- 設計圖面彈出層 -->
     <div class="modal-overlay" id="designModal" onclick="closeDesignMenu(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-header">
@@ -342,7 +498,7 @@
                     <div><i class="fa-solid fa-user-gear item-icon"></i>客戶圖面</div>
                     <i class="fa-solid fa-chevron-right arrow-icon"></i>
                 </a>
-                <a href="https://貼上您的_其他圖面_SharePoint資料夾網址" target="_blank" class="sub-menu-item">
+                <a href="#" target="_blank" class="sub-menu-item">
                     <div><i class="fa-solid fa-folder-open item-icon"></i>其他圖面</div>
                     <i class="fa-solid fa-chevron-right arrow-icon"></i>
                 </a>
@@ -358,23 +514,29 @@
 </footer>
 
 <script>
+    // 頁面切換控制邏輯
+    function showSchedule() {
+        document.getElementById('main-menu').style.display = 'none';
+        document.getElementById('schedule-view').style.display = 'block';
+        document.getElementById('btnBack').style.display = 'block';
+        document.getElementById('header-title').innerText = '生產進度調度看板';
+    }
+
+    function showMenu() {
+        document.getElementById('main-menu').style.display = 'grid';
+        document.getElementById('schedule-view').style.display = 'none';
+        document.getElementById('btnBack').style.display = 'none';
+        document.getElementById('header-title').innerText = '利峰行動工作台';
+    }
+
     // 控制彈出層的顯示與隱藏
     function toggleModal(show) {
         const modal = document.getElementById('designModal');
-        if (show) {
-            modal.classList.add('active');
-        } else {
-            modal.classList.remove('active');
-        }
+        if (show) { modal.classList.add('active'); } 
+        else { modal.classList.remove('active'); }
     }
-
-    function openDesignMenu() {
-        toggleModal(true);
-    }
-
-    function closeDesignMenu(event) {
-        toggleModal(false);
-    }
+    function openDesignMenu() { toggleModal(true); }
+    function closeDesignMenu(event) { toggleModal(false); }
 </script>
 
 </body>
