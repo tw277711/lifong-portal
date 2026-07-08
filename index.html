@@ -77,7 +77,7 @@
             display: none;
         }
 
-        /* 主內容區：首頁九宮格 */
+        /* 主內容區：首頁精簡六宮格 */
         #main-menu {
             flex: 1;
             padding: 20px;
@@ -132,28 +132,11 @@
             color: #38bdf8;
         }
 
-        /* 看板專屬黃金按鈕識別 */
-        .tile-btn.dashboard-btn .icon-wrapper {
-            background-color: #eab308; 
-            color: #0f172a;
-        }
-        .tile-btn.dashboard-btn {
-            border: 1px solid #eab308;
-        }
-
-        .tile-btn.highlight .icon-wrapper {
-            background-color: #38bdf8;
-            color: #0f172a;
-        }
-
-        .tile-btn.design-btn .icon-wrapper {
-            color: #a855f7;
-        }
-
-        /* 產品製造按鈕：採用翡翠綠色突顯生產感 */
-        .tile-btn.manufacture-btn .icon-wrapper {
-            color: #10b981;
-        }
+        /* 按鈕自訂高亮顏色 */
+        .tile-btn.order-btn .icon-wrapper { color: #eab308; } /* 訂單排程：黃金 */
+        .tile-btn.tools-btn .icon-wrapper { color: #38bdf8; } /* 工具資產：亮藍 */
+        .tile-btn.design-btn .icon-wrapper { color: #a855f7; } /* 設計：紫色 */
+        .tile-btn.manufacture-btn .icon-wrapper { color: #10b981; } /* 產品製造：翡翠綠 */
 
         .tile-btn span {
             font-size: 0.95rem;
@@ -281,27 +264,17 @@
         .sub-menu-item { background-color: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; color: #f8fafc; font-weight: 500; transition: all 0.2s; cursor: pointer; }
         .sub-menu-item i.item-icon { margin-right: 15px; font-size: 1.2rem; }
         
-        /* 彈出層選單個別顏色指引 */
+        /* 彈出層各模組專屬顏色 */
+        #orderModal .sub-menu-item i.item-icon { color: #eab308; }
+        #toolsModal .sub-menu-item i.item-icon { color: #38bdf8; }
         #designModal .sub-menu-item i.item-icon { color: #a855f7; }
         #manufactureModal .sub-menu-item i.item-icon { color: #10b981; }
         
         .sub-menu-item i.arrow-icon { color: #64748b; font-size: 0.9rem; }
         .sub-menu-item:active { background-color: #334155; border-color: #38bdf8; transform: scale(0.98); }
 
-        /* 選單頂部麵包屑導覽 */
-        .menu-breadcrumb {
-            font-size: 0.9rem;
-            color: #94a3b8;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .menu-breadcrumb span.clickable {
-            color: #10b981;
-            cursor: pointer;
-            text-decoration: underline;
-        }
+        .menu-breadcrumb { font-size: 0.9rem; color: #94a3b8; margin-bottom: 15px; display: flex; align-items: center; gap: 5px; }
+        .menu-breadcrumb span.clickable { color: #10b981; cursor: pointer; text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -313,11 +286,11 @@
 </header>
 
     <main id="main-menu">
-        <div class="tile-btn dashboard-btn" onclick="showSchedule()">
+        <div class="tile-btn order-btn" onclick="openOrderMenu()">
             <div class="icon-wrapper">
-                <i class="fa-solid fa-table-list"></i>
+                <i class="fa-solid fa-calendar-check"></i>
             </div>
-            <span>生產調度看板</span>
+            <span>訂單排程</span>
         </div>
 
         <a href="https://apps.powerapps.com/play/e/default-3e94ccc2-1343-416a-84fc-b26340a644f5/a/685f6eb5-cc13-4019-8156-e0a7868f8982?tenantId=3e94ccc2-1343-416a-84fc-b26340a644f5&hint=8d2e52bf-ba23-4745-a8b7-31511aaeb683&sourcetime=1782786065971" class="tile-btn">
@@ -333,27 +306,13 @@
             </div>
             <span>外勤維修保養</span>
         </a>
-        
-        <a href="https://apps.powerapps.com/play/e/default-3e94ccc2-1343-416a-84fc-b26340a644f5/a/cb2c07f9-69f8-41f5-a55c-00d7efcbb59f?tenantId=3e94ccc2-1343-416a-84fc-b26340a644f5&hint=c07e91cd-2df2-4ba9-be49-42c0079229b7&sourcetime=1782786130393" class="tile-btn">
-            <div class="icon-wrapper">
-                <i class="fa-solid fa-screwdriver-wrench"></i>
-            </div>
-            <span>工具機具報修</span>
-        </a>
-        
-        <a href="https://tw277711.github.io/tools-system/" class="tile-btn highlight">
-            <div class="icon-wrapper">
-                <i class="fa-solid fa-barcode"></i>
-            </div>
-            <span>工具批次借還</span>
-        </a>
 
-        <a href="https://apps.powerapps.com/play/e/default-3e94ccc2-1343-416a-84fc-b26340a644f5/a/9391d51a-a5c7-49f3-b700-4a567b8c5d4f?tenantId=3e94ccc2-1343-416a-84fc-b26340a644f5&hint=fd9253ed-d73f-4b32-a847-2fb52c26406d&sourcetime=1782800532492" class="tile-btn">
+        <div class="tile-btn tools-btn" onclick="openToolsMenu()">
             <div class="icon-wrapper">
-                <i class="fa-solid fa-network-wired"></i>
+                <i class="fa-solid fa-boxes-packing"></i>
             </div>
-            <span>接單排列管理</span>
-        </a>
+            <span>工具資產</span>
+        </div>
 
         <a href="https://apps.powerapps.com/play/e/default-3e94ccc2-1343-416a-84fc-b26340a644f5/a/9bbe2152-fe8e-49a3-9d25-bdfae57a50c7?tenantId=3e94ccc2-1343-416a-84fc-b26340a644f5&hint=142b864c-6493-4c87-86d9-a8eb8af47884&sourcetime=1782786149336" class="tile-btn">
             <div class="icon-wrapper">
@@ -499,6 +458,44 @@
         </div>
     </section>
 
+    <div class="modal-overlay" id="orderModal" onclick="closeOrderMenu(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-calendar-check"></i> 訂單排程選單</h2>
+                <button class="close-btn" onclick="toggleModal('orderModal', false)">&times;</button>
+            </div>
+            <div class="sub-menu-list">
+                <div class="sub-menu-item" onclick="showScheduleFromModal()">
+                    <div><i class="fa-solid fa-table-list item-icon"></i>生產調度看板</div>
+                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                </div>
+                <a href="https://apps.powerapps.com/play/e/default-3e94ccc2-1343-416a-84fc-b26340a644f5/a/9391d51a-a5c7-49f3-b700-4a567b8c5d4f?tenantId=3e94ccc2-1343-416a-84fc-b26340a644f5&hint=fd9253ed-d73f-4b32-a847-2fb52c26406d&sourcetime=1782800532492" class="sub-menu-item">
+                    <div><i class="fa-solid fa-network-wired item-icon"></i>接單排列管理</div>
+                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="toolsModal" onclick="closeToolsMenu(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-boxes-packing"></i> 工具資產選單</h2>
+                <button class="close-btn" onclick="toggleModal('toolsModal', false)">&times;</button>
+            </div>
+            <div class="sub-menu-list">
+                <a href="https://apps.powerapps.com/play/e/default-3e94ccc2-1343-416a-84fc-b26340a644f5/a/cb2c07f9-69f8-41f5-a55c-00d7efcbb59f?tenantId=3e94ccc2-1343-416a-84fc-b26340a644f5&hint=c07e91cd-2df2-4ba9-be49-42c0079229b7&sourcetime=1782786130393" class="sub-menu-item">
+                    <div><i class="fa-solid fa-screwdriver-wrench item-icon"></i>工具機具報修</div>
+                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
+                </a>
+                <a href="https://tw277711.github.io/tools-system/" class="sub-menu-item">
+                    <div><i class="fa-solid fa-barcode item-icon"></i>工具批次借還</div>
+                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
     <div class="modal-overlay" id="designModal" onclick="closeDesignMenu(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-header">
@@ -510,7 +507,7 @@
                     <div><i class="fa-solid fa-gears item-icon"></i>產品圖面</div>
                     <i class="fa-solid fa-chevron-right arrow-icon"></i>
                 </a>
-                <a href="https://22487603.sharepoint.com/:f:/s/msteams_218d12/IgB41VW7cufSRrFC1yO15_bJAcgpUzUss2IUhAH3e6buI5Q?e=J2ViTz" target="_blank" class="sub-menu-item">
+                <a href="https://22487603.sharepoint.com/:f:/s/msteams_218d12/IgB41VW7cufSRrFC1yO15_bJAcgpUzUss2IUhAH3e6buI5Q?e=FA5ioB" target="_blank" class="sub-menu-item">
                     <div><i class="fa-solid fa-user-gear item-icon"></i>客戶圖面</div>
                     <i class="fa-solid fa-chevron-right arrow-icon"></i>
                 </a>
@@ -528,11 +525,9 @@
                 <h2><i class="fa-solid fa-industry"></i> 產品製造選單</h2>
                 <button class="close-btn" onclick="toggleModal('manufactureModal', false)">&times;</button>
             </div>
-            
             <div class="menu-breadcrumb" id="m-breadcrumb" style="display: none;">
                 <span class="clickable" onclick="goToLayer2()">產品製造</span> <i class="fa-solid fa-chevron-right" style="font-size:0.7rem;"></i> <span id="current-node">製成品</span>
             </div>
-
             <div class="sub-menu-list" id="m-layer2">
                 <div class="sub-menu-item" onclick="goToLayer3('製成品')">
                     <div><i class="fa-solid fa-boxes-stacked item-icon"></i>製成品</div>
@@ -547,7 +542,6 @@
                     <i class="fa-solid fa-chevron-right arrow-icon"></i>
                 </div>
             </div>
-
             <div class="sub-menu-list" id="m-layer3" style="display: none;">
                 <a href="#" target="_blank" class="sub-menu-item">
                     <div><i class="fa-solid fa-fire-burner item-icon"></i>熱媒鍋爐</div>
@@ -566,7 +560,6 @@
                     <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
                 </a>
             </div>
-
         </div>
     </div>
 
@@ -586,6 +579,11 @@
         document.getElementById('header-title').innerText = '生產調度看板';
     }
 
+    function showScheduleFromModal() {
+        toggleModal('orderModal', false); // 先關閉彈出選單
+        setTimeout(showSchedule, 200);   // 延時平滑切換到看板畫面
+    }
+
     function showMenu() {
         document.getElementById('main-menu').style.display = 'grid';
         document.getElementById('schedule-view').style.display = 'none';
@@ -601,35 +599,36 @@
         } else { 
             modal.classList.remove('active'); 
             if(modalId === 'manufactureModal') {
-                setTimeout(goToLayer2, 300); // 關閉製造選單時，隱性重置回第二層
+                setTimeout(goToLayer2, 300);
             }
         }
     }
 
-    // 設計選單控制
+    // 各選單控制開關
+    function openOrderMenu() { toggleModal('orderModal', true); }
+    function closeOrderMenu(event) { toggleModal('orderModal', false); }
+
+    function openToolsMenu() { toggleModal('toolsModal', true); }
+    function closeToolsMenu(event) { toggleModal('toolsModal', false); }
+
     function openDesignMenu() { toggleModal('designModal', true); }
     function closeDesignMenu(event) { toggleModal('designModal', false); }
 
-    // 產品製造多層選單邏輯
     function openManufactureMenu() { toggleModal('manufactureModal', true); }
     function closeManufactureMenu(event) { toggleModal('manufactureModal', false); }
 
-    // 切換至第三層（明細）
+    // 產品製造多層選單跳轉
     function goToLayer3(nodeName) {
         document.getElementById('m-layer2').style.display = 'none';
         document.getElementById('m-layer3').style.display = 'flex';
         document.getElementById('m-breadcrumb').style.display = 'flex';
         document.getElementById('current-node').innerText = nodeName;
     }
-
-    // 返回第二層（主選單）
     function goToLayer2() {
         document.getElementById('m-layer2').style.display = 'flex';
         document.getElementById('m-layer3').style.display = 'none';
         document.getElementById('m-breadcrumb').style.display = 'none';
     }
-
-    // 防呆提示（針對尚未規劃第三層的按鈕）
     function showBuildAlert(name) {
         alert('【' + name + '】模組目前正在規劃建置中，敬請期待！');
     }
