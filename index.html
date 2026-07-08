@@ -134,6 +134,7 @@
 
         /* 按鈕自訂高亮顏色 */
         .tile-btn.order-btn .icon-wrapper { color: #eab308; } /* 訂單排程：黃金 */
+        .tile-btn.material-btn .icon-wrapper { color: #f97316; } /* 物料管理：溫暖橘 */
         .tile-btn.tools-btn .icon-wrapper { color: #38bdf8; } /* 工具資產：亮藍 */
         .tile-btn.design-btn .icon-wrapper { color: #a855f7; } /* 設計：紫色 */
         .tile-btn.manufacture-btn .icon-wrapper { color: #10b981; } /* 產品製造：翡翠綠 */
@@ -266,6 +267,7 @@
         
         /* 彈出層各模組專屬顏色 */
         #orderModal .sub-menu-item i.item-icon { color: #eab308; }
+        #materialModal .sub-menu-item i.item-icon { color: #f97316; }
         #toolsModal .sub-menu-item i.item-icon { color: #38bdf8; }
         #designModal .sub-menu-item i.item-icon { color: #a855f7; }
         #manufactureModal .sub-menu-item i.item-icon { color: #10b981; }
@@ -293,12 +295,12 @@
             <span>訂單排程</span>
         </div>
 
-        <a href="https://apps.powerapps.com/play/e/default-3e94ccc2-1343-416a-84fc-b26340a644f5/a/685f6eb5-cc13-4019-8156-e0a7868f8982?tenantId=3e94ccc2-1343-416a-84fc-b26340a644f5&hint=8d2e52bf-ba23-4745-a8b7-31511aaeb683&sourcetime=1782786065971" class="tile-btn">
+        <div class="tile-btn material-btn" onclick="openMaterialMenu()">
             <div class="icon-wrapper">
-                <i class="fa-solid fa-cart-shopping"></i>
+                <i class="fa-solid fa-boxes-stacked"></i>
             </div>
-            <span>利峰請購系統</span>
-        </a>
+            <span>物料管理</span>
+        </div>
         
         <a href="https://apps.powerapps.com/play/e/default-3e94ccc2-1343-416a-84fc-b26340a644f5/a/3026c973-b77c-44bc-a35e-f0dd4ea44483?tenantId=3e94ccc2-1343-416a-84fc-b26340a644f5&hint=2df38572-5b1f-430a-9777-63486bc22add&sourcetime=1782786105356" class="tile-btn">
             <div class="icon-wrapper">
@@ -313,13 +315,6 @@
             </div>
             <span>工具資產</span>
         </div>
-
-        <a href="https://apps.powerapps.com/play/e/default-3e94ccc2-1343-416a-84fc-b26340a644f5/a/9bbe2152-fe8e-49a3-9d25-bdfae57a50c7?tenantId=3e94ccc2-1343-416a-84fc-b26340a644f5&hint=142b864c-6493-4c87-86d9-a8eb8af47884&sourcetime=1782786149336" class="tile-btn">
-            <div class="icon-wrapper">
-                <i class="fa-solid fa-fire-burner"></i>
-            </div>
-            <span>鍋爐管進出庫</span>
-        </a>
         
         <div class="tile-btn design-btn" onclick="openDesignMenu()">
             <div class="icon-wrapper">
@@ -477,6 +472,25 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="materialModal" onclick="closeMaterialMenu(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-boxes-stacked"></i> 物料管理選單</h2>
+                <button class="close-btn" onclick="toggleModal('materialModal', false)">&times;</button>
+            </div>
+            <div class="sub-menu-list">
+                <a href="https://apps.powerapps.com/play/e/default-3e94ccc2-1343-416a-84fc-b26340a644f5/a/685f6eb5-cc13-4019-8156-e0a7868f8982?tenantId=3e94ccc2-1343-416a-84fc-b26340a644f5&hint=8d2e52bf-ba23-4745-a8b7-31511aaeb683&sourcetime=1782786065971" class="sub-menu-item">
+                    <div><i class="fa-solid fa-cart-shopping item-icon"></i>利峰請購系統</div>
+                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
+                </a>
+                <a href="https://apps.powerapps.com/play/e/default-3e94ccc2-1343-416a-84fc-b26340a644f5/a/9bbe2152-fe8e-49a3-9d25-bdfae57a50c7?tenantId=3e94ccc2-1343-416a-84fc-b26340a644f5&hint=142b864c-6493-4c87-86d9-a8eb8af47884&sourcetime=1782786149336" class="sub-menu-item">
+                    <div><i class="fa-solid fa-fire-burner item-icon"></i>鍋爐管進出庫</div>
+                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
     <div class="modal-overlay" id="toolsModal" onclick="closeToolsMenu(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-header">
@@ -586,6 +600,7 @@
         document.getElementById('header-title').innerText = '生產調度看板';
     }
 
+    /* 點擊看板後的重定向 */
     function showScheduleFromModal() {
         toggleModal('orderModal', false);
         setTimeout(showSchedule, 200);
@@ -612,6 +627,10 @@
 
     function openOrderMenu() { toggleModal('orderModal', true); }
     function closeOrderMenu(event) { toggleModal('orderModal', false); }
+
+    /* 🟢 物料管理開關控制 */
+    function openMaterialMenu() { toggleModal('materialModal', true); }
+    function closeMaterialMenu(event) { toggleModal('materialModal', false); }
 
     function openToolsMenu() { toggleModal('toolsModal', true); }
     function closeToolsMenu(event) { toggleModal('toolsModal', false); }
