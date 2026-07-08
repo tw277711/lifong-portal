@@ -492,6 +492,10 @@
                     <div><i class="fa-solid fa-barcode item-icon"></i>工具批次借還</div>
                     <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
                 </a>
+                <a href="https://tw277711.github.io/tools-system/manager.html" class="sub-menu-item">
+                    <div><i class="fa-solid fa-chart-line item-icon"></i>未歸還工具監控看板</div>
+                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
+                </a>
             </div>
         </div>
     </div>
@@ -559,6 +563,10 @@
                     <div><i class="fa-solid fa-faucet-drip item-icon"></i>泵組</div>
                     <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
                 </a>
+                <a href="#" target="_blank" class="sub-menu-item">
+                    <div><i class="fa-solid fa-gopuram item-icon"></i>煙囪</div>
+                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
+                </a>
             </div>
         </div>
     </div>
@@ -571,7 +579,6 @@
 </footer>
 
 <script>
-    // 頁面切換控制邏輯
     function showSchedule() {
         document.getElementById('main-menu').style.display = 'none';
         document.getElementById('schedule-view').style.display = 'block';
@@ -580,8 +587,8 @@
     }
 
     function showScheduleFromModal() {
-        toggleModal('orderModal', false); // 先關閉彈出選單
-        setTimeout(showSchedule, 200);   // 延時平滑切換到看板畫面
+        toggleModal('orderModal', false);
+        setTimeout(showSchedule, 200);
     }
 
     function showMenu() {
@@ -591,7 +598,6 @@
         document.getElementById('header-title').innerText = '利峰行動工作台';
     }
 
-    // 泛用彈出層控制
     function toggleModal(modalId, show) {
         const modal = document.getElementById(modalId);
         if (show) { 
@@ -604,7 +610,6 @@
         }
     }
 
-    // 各選單控制開關
     function openOrderMenu() { toggleModal('orderModal', true); }
     function closeOrderMenu(event) { toggleModal('orderModal', false); }
 
@@ -617,7 +622,6 @@
     function openManufactureMenu() { toggleModal('manufactureModal', true); }
     function closeManufactureMenu(event) { toggleModal('manufactureModal', false); }
 
-    // 產品製造多層選單跳轉
     function goToLayer3(nodeName) {
         document.getElementById('m-layer2').style.display = 'none';
         document.getElementById('m-layer3').style.display = 'flex';
