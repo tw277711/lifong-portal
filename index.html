@@ -150,6 +150,11 @@
             color: #a855f7;
         }
 
+        /* 產品製造按鈕：採用翡翠綠色突顯生產感 */
+        .tile-btn.manufacture-btn .icon-wrapper {
+            color: #10b981;
+        }
+
         .tile-btn span {
             font-size: 0.95rem;
             font-weight: 500;
@@ -169,7 +174,6 @@
             width: 100%;
         }
 
-        /* 群組外框 */
         .group-container {
             background-color: #1e293b;
             border: 1px solid #334155;
@@ -179,7 +183,6 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        /* 群組頁首標題 */
         .group-header {
             background: linear-gradient(90deg, #1e40af, #1e293b);
             padding: 10px 15px;
@@ -190,7 +193,7 @@
         }
 
         .group-tag {
-            background-color: #fdba74; /* 橘黃色高亮標籤 */
+            background-color: #fdba74;
             color: #1e293b;
             padding: 4px 10px;
             border-radius: 6px;
@@ -204,7 +207,6 @@
             font-weight: bold;
         }
 
-        /* 表格樣式 */
         .schedule-table {
             width: 100%;
             border-collapse: collapse;
@@ -224,21 +226,18 @@
             padding: 12px 10px;
             border-bottom: 1px solid #1e293b;
             vertical-align: middle;
-            word-break: break-all; /* 💡 確保規格型號太長時會自動換行不擠壓 */
+            word-break: break-all;
         }
 
-        /* 重點欄位「規格型號」視覺加強 */
         .spec-highlight {
-            color: #fca5a5; /* 💡 採用淡紅色文字，讓重點規格一眼突出 */
+            color: #fca5a5;
             font-weight: 500;
         }
 
-        /* 表格橫列交替底色 */
         .schedule-table tr:nth-child(even) {
             background-color: #24334d;
         }
 
-        /* 工令號標籤 */
         .badge-id {
             background-color: #334155;
             color: #38bdf8;
@@ -248,7 +247,6 @@
             font-weight: bold;
         }
 
-        /* 手機端畫面寬度調整控制（💡 已移除隱藏規格設定，全面強制保留顯示） */
         @media (max-width: 600px) {
             .schedule-table {
                 font-size: 0.85rem;
@@ -278,25 +276,43 @@
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 10px; border-bottom: 1px solid #334155; }
         .modal-header h2 { font-size: 1.2rem; color: #38bdf8; display: flex; align-items: center; gap: 10px; }
         .close-btn { background: none; border: none; color: #94a3b8; font-size: 1.5rem; cursor: pointer; padding: 5px; }
+        
         .sub-menu-list { display: flex; flex-direction: column; gap: 12px; }
-        .sub-menu-item { background-color: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; color: #f8fafc; font-weight: 500; transition: all 0.2s; }
-        .sub-menu-item i.item-icon { color: #a855f7; margin-right: 15px; font-size: 1.2rem; }
+        .sub-menu-item { background-color: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; color: #f8fafc; font-weight: 500; transition: all 0.2s; cursor: pointer; }
+        .sub-menu-item i.item-icon { margin-right: 15px; font-size: 1.2rem; }
+        
+        /* 彈出層選單個別顏色指引 */
+        #designModal .sub-menu-item i.item-icon { color: #a855f7; }
+        #manufactureModal .sub-menu-item i.item-icon { color: #10b981; }
+        
         .sub-menu-item i.arrow-icon { color: #64748b; font-size: 0.9rem; }
-        .sub-menu-item:active { background-color: #334155; border-color: #a855f7; transform: scale(0.98); }
+        .sub-menu-item:active { background-color: #334155; border-color: #38bdf8; transform: scale(0.98); }
+
+        /* 選單頂部麵包屑導覽 */
+        .menu-breadcrumb {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .menu-breadcrumb span.clickable {
+            color: #10b981;
+            cursor: pointer;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <!-- 左側返回首頁按鈕 -->
     <button class="back-btn" id="btnBack" onclick="showMenu()"><i class="fa-solid fa-arrow-left"></i> 返回</button>
     <h1 id="header-title">利峰行動工作台</h1>
     <p><i class="fa-solid fa-circle-user"></i> 歡迎使用</p>
 </header>
 
-    <!-- 📱 第一頁：主功能九宮格選單 -->
     <main id="main-menu">
-        <!-- 💡 標題已修正為：生產調度看板 -->
         <div class="tile-btn dashboard-btn" onclick="showSchedule()">
             <div class="icon-wrapper">
                 <i class="fa-solid fa-table-list"></i>
@@ -352,12 +368,16 @@
             </div>
             <span>設計</span>
         </div>
+
+        <div class="tile-btn manufacture-btn" onclick="openManufactureMenu()">
+            <div class="icon-wrapper">
+                <i class="fa-solid fa-industry"></i>
+            </div>
+            <span>產品製造</span>
+        </div>
     </main>
 
-    <!-- 📊 第二頁：生產排程呈現畫面（💡 規格型號欄位全畫面強制保留且高亮） -->
     <section id="schedule-view">
-        
-        <!-- 【群組 1】 -->
         <div class="group-container">
             <div class="group-header">
                 <span class="group-tag">7月序1</span>
@@ -392,7 +412,6 @@
             </table>
         </div>
 
-        <!-- 【群組 2】 -->
         <div class="group-container">
             <div class="group-header">
                 <span class="group-tag">7月序4</span>
@@ -411,7 +430,6 @@
             </table>
         </div>
 
-        <!-- 【群組 3】 -->
         <div class="group-container">
             <div class="group-header">
                 <span class="group-tag">8月序1</span>
@@ -430,7 +448,6 @@
             </table>
         </div>
 
-        <!-- 【群組 4】 -->
         <div class="group-container">
             <div class="group-header">
                 <span class="group-tag">8月序2</span>
@@ -456,7 +473,6 @@
             </table>
         </div>
 
-        <!-- 【群組 5】 -->
         <div class="group-container">
             <div class="group-header">
                 <span class="group-tag">8月序3</span>
@@ -481,15 +497,13 @@
                 </tbody>
             </table>
         </div>
-
     </section>
 
-    <!-- 設計圖面彈出層 -->
     <div class="modal-overlay" id="designModal" onclick="closeDesignMenu(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-header">
                 <h2><i class="fa-solid fa-compass-drafting"></i> 設計圖面選單</h2>
-                <button class="close-btn" onclick="toggleModal(false)">&times;</button>
+                <button class="close-btn" onclick="toggleModal('designModal', false)">&times;</button>
             </div>
             <div class="sub-menu-list">
                 <a href="https://22487603.sharepoint.com/:f:/s/msteams_218d12/IgDaZqafBTAeQarD4IpEG-_QAdvGd4k4Mnk-5rlfvewXNoA?e=syM9aS" target="_blank" class="sub-menu-item">
@@ -508,6 +522,54 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="manufactureModal" onclick="closeManufactureMenu(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-industry"></i> 產品製造選單</h2>
+                <button class="close-btn" onclick="toggleModal('manufactureModal', false)">&times;</button>
+            </div>
+            
+            <div class="menu-breadcrumb" id="m-breadcrumb" style="display: none;">
+                <span class="clickable" onclick="goToLayer2()">產品製造</span> <i class="fa-solid fa-chevron-right" style="font-size:0.7rem;"></i> <span id="current-node">製成品</span>
+            </div>
+
+            <div class="sub-menu-list" id="m-layer2">
+                <div class="sub-menu-item" onclick="goToLayer3('製成品')">
+                    <div><i class="fa-solid fa-boxes-stacked item-icon"></i>製成品</div>
+                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                </div>
+                <div class="sub-menu-item" onclick="showBuildAlert('工件')">
+                    <div><i class="fa-solid fa-puzzle-piece item-icon"></i>工件</div>
+                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                </div>
+                <div class="sub-menu-item" onclick="showBuildAlert('工站')">
+                    <div><i class="fa-solid fa-trowel-bricks item-icon"></i>工站</div>
+                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                </div>
+            </div>
+
+            <div class="sub-menu-list" id="m-layer3" style="display: none;">
+                <a href="#" target="_blank" class="sub-menu-item">
+                    <div><i class="fa-solid fa-fire-burner item-icon"></i>熱媒鍋爐</div>
+                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
+                </a>
+                <a href="#" target="_blank" class="sub-menu-item">
+                    <div><i class="fa-solid fa-retweet item-icon"></i>熱交換器</div>
+                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
+                </a>
+                <a href="#" target="_blank" class="sub-menu-item">
+                    <div><i class="fa-solid fa-database item-icon"></i>桶槽</div>
+                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
+                </a>
+                <a href="#" target="_blank" class="sub-menu-item">
+                    <div><i class="fa-solid fa-faucet-drip item-icon"></i>泵組</div>
+                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
+                </a>
+            </div>
+
+        </div>
+    </div>
+
 <footer style="text-align: center; padding: 20px 15px; font-size: 0.8rem; color: #64748b; background-color: #0f172a;">
     <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
         <img src="logo-transparent.png" alt="" style="height: 20px; width: auto; display: inline-block;">
@@ -521,7 +583,6 @@
         document.getElementById('main-menu').style.display = 'none';
         document.getElementById('schedule-view').style.display = 'block';
         document.getElementById('btnBack').style.display = 'block';
-        // 💡 點擊進入後，上方主大標題同步更新為：生產調度看板
         document.getElementById('header-title').innerText = '生產調度看板';
     }
 
@@ -532,14 +593,46 @@
         document.getElementById('header-title').innerText = '利峰行動工作台';
     }
 
-    // 控制彈出層的顯示與隱藏
-    function toggleModal(show) {
-        const modal = document.getElementById('designModal');
-        if (show) { modal.classList.add('active'); } 
-        else { modal.classList.remove('active'); }
+    // 泛用彈出層控制
+    function toggleModal(modalId, show) {
+        const modal = document.getElementById(modalId);
+        if (show) { 
+            modal.classList.add('active'); 
+        } else { 
+            modal.classList.remove('active'); 
+            if(modalId === 'manufactureModal') {
+                setTimeout(goToLayer2, 300); // 關閉製造選單時，隱性重置回第二層
+            }
+        }
     }
-    function openDesignMenu() { toggleModal(true); }
-    function closeDesignMenu(event) { toggleModal(false); }
+
+    // 設計選單控制
+    function openDesignMenu() { toggleModal('designModal', true); }
+    function closeDesignMenu(event) { toggleModal('designModal', false); }
+
+    // 產品製造多層選單邏輯
+    function openManufactureMenu() { toggleModal('manufactureModal', true); }
+    function closeManufactureMenu(event) { toggleModal('manufactureModal', false); }
+
+    // 切換至第三層（明細）
+    function goToLayer3(nodeName) {
+        document.getElementById('m-layer2').style.display = 'none';
+        document.getElementById('m-layer3').style.display = 'flex';
+        document.getElementById('m-breadcrumb').style.display = 'flex';
+        document.getElementById('current-node').innerText = nodeName;
+    }
+
+    // 返回第二層（主選單）
+    function goToLayer2() {
+        document.getElementById('m-layer2').style.display = 'flex';
+        document.getElementById('m-layer3').style.display = 'none';
+        document.getElementById('m-breadcrumb').style.display = 'none';
+    }
+
+    // 防呆提示（針對尚未規劃第三層的按鈕）
+    function showBuildAlert(name) {
+        alert('【' + name + '】模組目前正在規劃建置中，敬請期待！');
+    }
 </script>
 
 </body>
