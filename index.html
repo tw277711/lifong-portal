@@ -77,7 +77,7 @@
             display: none;
         }
 
-        /* 主內容區：首頁精簡六宮格 */
+        /* 主內容區：首頁九宮格 */
         #main-menu {
             flex: 1;
             padding: 20px;
@@ -132,12 +132,23 @@
             color: #38bdf8;
         }
 
-        /* 按鈕自訂高亮顏色 */
-        .tile-btn.order-btn .icon-wrapper { color: #eab308; } /* 訂單排程：黃金 */
-        .tile-btn.material-btn .icon-wrapper { color: #f97316; } /* 物料管理：溫暖橘 */
-        .tile-btn.tools-btn .icon-wrapper { color: #38bdf8; } /* 工具資產：亮藍 */
-        .tile-btn.design-btn .icon-wrapper { color: #a855f7; } /* 設計：紫色 */
-        .tile-btn.manufacture-btn .icon-wrapper { color: #10b981; } /* 產品製造：翡翠綠 */
+        /* 看板專屬黃金按鈕識別 */
+        .tile-btn.dashboard-btn .icon-wrapper {
+            background-color: #eab308; 
+            color: #0f172a;
+        }
+        .tile-btn.dashboard-btn {
+            border: 1px solid #eab308;
+        }
+
+        .tile-btn.highlight .icon-wrapper {
+            background-color: #38bdf8;
+            color: #0f172a;
+        }
+
+        .tile-btn.design-btn .icon-wrapper {
+            color: #a855f7;
+        }
 
         .tile-btn span {
             font-size: 0.95rem;
@@ -158,6 +169,7 @@
             width: 100%;
         }
 
+        /* 群組外框 */
         .group-container {
             background-color: #1e293b;
             border: 1px solid #334155;
@@ -167,6 +179,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
+        /* 群組頁首標題 */
         .group-header {
             background: linear-gradient(90deg, #1e40af, #1e293b);
             padding: 10px 15px;
@@ -177,7 +190,7 @@
         }
 
         .group-tag {
-            background-color: #fdba74;
+            background-color: #fdba74; /* 橘黃色高亮標籤 */
             color: #1e293b;
             padding: 4px 10px;
             border-radius: 6px;
@@ -191,6 +204,7 @@
             font-weight: bold;
         }
 
+        /* 表格樣式 */
         .schedule-table {
             width: 100%;
             border-collapse: collapse;
@@ -213,15 +227,18 @@
             word-break: break-all;
         }
 
+        /* 重點欄位「規格型號」視覺加強 */
         .spec-highlight {
             color: #fca5a5;
             font-weight: 500;
         }
 
+        /* 表格橫列交替底色 */
         .schedule-table tr:nth-child(even) {
             background-color: #24334d;
         }
 
+        /* 工令號標籤 */
         .badge-id {
             background-color: #334155;
             color: #38bdf8;
@@ -263,44 +280,55 @@
         
         .sub-menu-list { display: flex; flex-direction: column; gap: 12px; }
         .sub-menu-item { background-color: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; color: #f8fafc; font-weight: 500; transition: all 0.2s; cursor: pointer; }
-        .sub-menu-item i.item-icon { margin-right: 15px; font-size: 1.2rem; }
         
-        /* 彈出層各模組專屬顏色 */
+        /* 彈出層各選單圖標顏色識別 */
         #orderModal .sub-menu-item i.item-icon { color: #eab308; }
-        #materialModal .sub-menu-item i.item-icon { color: #f97316; }
-        #toolsModal .sub-menu-item i.item-icon { color: #38bdf8; }
         #designModal .sub-menu-item i.item-icon { color: #a855f7; }
-        #manufactureModal .sub-menu-item i.item-icon { color: #10b981; }
         
         .sub-menu-item i.arrow-icon { color: #64748b; font-size: 0.9rem; }
         .sub-menu-item:active { background-color: #334155; border-color: #38bdf8; transform: scale(0.98); }
 
-        .menu-breadcrumb { font-size: 0.9rem; color: #94a3b8; margin-bottom: 15px; display: flex; align-items: center; gap: 5px; }
-        .menu-breadcrumb span.clickable { color: #10b981; cursor: pointer; text-decoration: underline; }
+        /* 選單頂部麵包屑導覽 */
+        .menu-breadcrumb {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .menu-breadcrumb span.clickable {
+            color: #eab308;
+            cursor: pointer;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
 
 <header>
+    <!-- 左側返回首頁按鈕 -->
     <button class="back-btn" id="btnBack" onclick="showMenu()"><i class="fa-solid fa-arrow-left"></i> 返回</button>
     <h1 id="header-title">利峰行動工作台</h1>
     <p><i class="fa-solid fa-circle-user"></i> 歡迎使用</p>
 </header>
 
+    <!-- 📱 第一頁：主功能九宮格選單 -->
     <main id="main-menu">
-        <div class="tile-btn order-btn" onclick="openOrderMenu()">
+        <!-- 💡 第一層改為觸發訂單排程選單彈出層 -->
+        <div class="tile-btn dashboard-btn" onclick="openOrderMenu()">
             <div class="icon-wrapper">
                 <i class="fa-solid fa-calendar-check"></i>
             </div>
             <span>訂單排程</span>
         </div>
 
-        <div class="tile-btn material-btn" onclick="openMaterialMenu()">
+        <a href="https://apps.powerapps.com/play/e/default-3e94ccc2-1343-416a-84fc-b26340a644f5/a/685f6eb5-cc13-4019-8156-e0a7868f8982?tenantId=3e94ccc2-1343-416a-84fc-b26340a644f5&hint=8d2e52bf-ba23-4745-a8b7-31511aaeb683&sourcetime=1782786065971" class="tile-btn">
             <div class="icon-wrapper">
-                <i class="fa-solid fa-boxes-stacked"></i>
+                <i class="fa-solid fa-cart-shopping"></i>
             </div>
-            <span>物料管理</span>
-        </div>
+            <span>利峰請購系統</span>
+        </a>
         
         <a href="https://apps.powerapps.com/play/e/default-3e94ccc2-1343-416a-84fc-b26340a644f5/a/3026c973-b77c-44bc-a35e-f0dd4ea44483?tenantId=3e94ccc2-1343-416a-84fc-b26340a644f5&hint=2df38572-5b1f-430a-9777-63486bc22add&sourcetime=1782786105356" class="tile-btn">
             <div class="icon-wrapper">
@@ -308,13 +336,34 @@
             </div>
             <span>外勤維修保養</span>
         </a>
-
-        <div class="tile-btn tools-btn" onclick="openToolsMenu()">
+        
+        <a href="https://apps.powerapps.com/play/e/default-3e94ccc2-1343-416a-84fc-b26340a644f5/a/cb2c07f9-69f8-41f5-a55c-00d7efcbb59f?tenantId=3e94ccc2-1343-416a-84fc-b26340a644f5&hint=c07e91cd-2df2-4ba9-be49-42c0079229b7&sourcetime=1782786130393" class="tile-btn">
             <div class="icon-wrapper">
-                <i class="fa-solid fa-boxes-packing"></i>
+                <i class="fa-solid fa-screwdriver-wrench"></i>
             </div>
-            <span>工具資產</span>
-        </div>
+            <span>工具機具報修</span>
+        </a>
+        
+        <a href="https://tw277711.github.io/tools-system/" class="tile-btn highlight">
+            <div class="icon-wrapper">
+                <i class="fa-solid fa-barcode"></i>
+            </div>
+            <span>工具批次借還</span>
+        </a>
+
+        <a href="https://apps.powerapps.com/play/e/default-3e94ccc2-1343-416a-84fc-b26340a644f5/a/9391d51a-a5c7-49f3-b700-4a567b8c5d4f?tenantId=3e94ccc2-1343-416a-84fc-b26340a644f5&hint=fd9253ed-d73f-4b32-a847-2fb52c26406d&sourcetime=1782800532492" class="tile-btn">
+            <div class="icon-wrapper">
+                <i class="fa-solid fa-network-wired"></i>
+            </div>
+            <span>接單排列管理</span>
+        </a>
+
+        <a href="https://apps.powerapps.com/play/e/default-3e94ccc2-1343-416a-84fc-b26340a644f5/a/9bbe2152-fe8e-49a3-9d25-bdfae57a50c7?tenantId=3e94ccc2-1343-416a-84fc-b26340a644f5&hint=142b864c-6493-4c87-86d9-a8eb8af47884&sourcetime=1782786149336" class="tile-btn">
+            <div class="icon-wrapper">
+                <i class="fa-solid fa-fire-burner"></i>
+            </div>
+            <span>鍋爐管進出庫</span>
+        </a>
         
         <div class="tile-btn design-btn" onclick="openDesignMenu()">
             <div class="icon-wrapper">
@@ -322,16 +371,12 @@
             </div>
             <span>設計</span>
         </div>
-
-        <div class="tile-btn manufacture-btn" onclick="openManufactureMenu()">
-            <div class="icon-wrapper">
-                <i class="fa-solid fa-industry"></i>
-            </div>
-            <span>產品製造</span>
-        </div>
     </main>
 
+    <!-- 📊 第二頁：生產排程呈現畫面（💡 規格型號欄位全畫面強制保留且高亮） -->
     <section id="schedule-view">
+        
+        <!-- 【群組 1】 -->
         <div class="group-container">
             <div class="group-header">
                 <span class="group-tag">7月序1</span>
@@ -366,6 +411,7 @@
             </table>
         </div>
 
+        <!-- 【群組 2】 -->
         <div class="group-container">
             <div class="group-header">
                 <span class="group-tag">7月序4</span>
@@ -384,6 +430,7 @@
             </table>
         </div>
 
+        <!-- 【群組 3】 -->
         <div class="group-container">
             <div class="group-header">
                 <span class="group-tag">8月序1</span>
@@ -402,6 +449,7 @@
             </table>
         </div>
 
+        <!-- 【群組 4】 -->
         <div class="group-container">
             <div class="group-header">
                 <span class="group-tag">8月序2</span>
@@ -427,6 +475,7 @@
             </table>
         </div>
 
+        <!-- 【群組 5】 -->
         <div class="group-container">
             <div class="group-header">
                 <span class="group-tag">8月序3</span>
@@ -451,17 +500,26 @@
                 </tbody>
             </table>
         </div>
+
     </section>
 
+    <!-- 🟢 新增：訂單排程彈出層 (支援三層深切換) -->
     <div class="modal-overlay" id="orderModal" onclick="closeOrderMenu(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-header">
                 <h2><i class="fa-solid fa-calendar-check"></i> 訂單排程選單</h2>
                 <button class="close-btn" onclick="toggleModal('orderModal', false)">&times;</button>
             </div>
-            <div class="sub-menu-list">
-                <div class="sub-menu-item" onclick="showScheduleFromModal()">
-                    <div><i class="fa-solid fa-table-list item-icon"></i>生產調度看板</div>
+            
+            <!-- 麵包屑導覽（第三層顯示，點選可返回第二層） -->
+            <div class="menu-breadcrumb" id="o-breadcrumb" style="display: none;">
+                <span class="clickable" onclick="goToOrderLayer2()">訂單排程</span> <i class="fa-solid fa-chevron-right" style="font-size:0.7rem;"></i> <span id="order-current-node">生產調度管理</span>
+            </div>
+
+            <!-- 【第二層選項畫面】 -->
+            <div class="sub-menu-list" id="o-layer2">
+                <div class="sub-menu-item" onclick="goToOrderLayer3('生產調度管理')">
+                    <div><i class="fa-solid fa-sliders item-icon"></i>生產調度管理</div>
                     <i class="fa-solid fa-chevron-right arrow-icon"></i>
                 </div>
                 <a href="https://apps.powerapps.com/play/e/default-3e94ccc2-1343-416a-84fc-b26340a644f5/a/9391d51a-a5c7-49f3-b700-4a567b8c5d4f?tenantId=3e94ccc2-1343-416a-84fc-b26340a644f5&hint=fd9253ed-d73f-4b32-a847-2fb52c26406d&sourcetime=1782800532492" class="sub-menu-item">
@@ -469,51 +527,27 @@
                     <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
                 </a>
             </div>
+
+            <!-- 【第三層選項畫面：生產調度管理明細】 -->
+            <div class="sub-menu-list" id="o-layer3" style="display: none;">
+                <a href="https://script.google.com/macros/s/AKfycbzn7KsUUOlj4QeZXjQwfl0OpWameleqPh1h4_EcQYEvSocFrRye9zlWlJQTyol7JtsJ/exec" target="_blank" class="sub-menu-item">
+                    <div><i class="fa-solid fa-screwdriver-wrench item-icon"></i>工站作業回報</div>
+                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
+                </a>
+                <a href="https://script.google.com/macros/s/AKfycbzn7KsUUOlj4QeZXjQwfl0OpWameleqPh1h4_EcQYEvSocFrRye9zlWlJQTyol7JtsJ/exec?view=mgmt" target="_blank" class="sub-menu-item">
+                    <div><i class="fa-solid fa-user-gear item-icon"></i>生管即時調度</div>
+                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
+                </a>
+                <div class="sub-menu-item" onclick="showScheduleFromModal()">
+                    <div><i class="fa-solid fa-table-list item-icon"></i>調度看板</div>
+                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                </div>
+            </div>
+
         </div>
     </div>
 
-    <div class="modal-overlay" id="materialModal" onclick="closeMaterialMenu(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <div class="modal-header">
-                <h2><i class="fa-solid fa-boxes-stacked"></i> 物料管理選單</h2>
-                <button class="close-btn" onclick="toggleModal('materialModal', false)">&times;</button>
-            </div>
-            <div class="sub-menu-list">
-                <a href="https://apps.powerapps.com/play/e/default-3e94ccc2-1343-416a-84fc-b26340a644f5/a/685f6eb5-cc13-4019-8156-e0a7868f8982?tenantId=3e94ccc2-1343-416a-84fc-b26340a644f5&hint=8d2e52bf-ba23-4745-a8b7-31511aaeb683&sourcetime=1782786065971" class="sub-menu-item">
-                    <div><i class="fa-solid fa-cart-shopping item-icon"></i>利峰請購系統</div>
-                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
-                </a>
-                <a href="https://apps.powerapps.com/play/e/default-3e94ccc2-1343-416a-84fc-b26340a644f5/a/9bbe2152-fe8e-49a3-9d25-bdfae57a50c7?tenantId=3e94ccc2-1343-416a-84fc-b26340a644f5&hint=142b864c-6493-4c87-86d9-a8eb8af47884&sourcetime=1782786149336" class="sub-menu-item">
-                    <div><i class="fa-solid fa-fire-burner item-icon"></i>鍋爐管進出庫</div>
-                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="toolsModal" onclick="closeToolsMenu(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <div class="modal-header">
-                <h2><i class="fa-solid fa-boxes-packing"></i> 工具資產選單</h2>
-                <button class="close-btn" onclick="toggleModal('toolsModal', false)">&times;</button>
-            </div>
-            <div class="sub-menu-list">
-                <a href="https://apps.powerapps.com/play/e/default-3e94ccc2-1343-416a-84fc-b26340a644f5/a/cb2c07f9-69f8-41f5-a55c-00d7efcbb59f?tenantId=3e94ccc2-1343-416a-84fc-b26340a644f5&hint=c07e91cd-2df2-4ba9-be49-42c0079229b7&sourcetime=1782786130393" class="sub-menu-item">
-                    <div><i class="fa-solid fa-screwdriver-wrench item-icon"></i>工具機具報修</div>
-                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
-                </a>
-                <a href="https://tw277711.github.io/tools-system/" class="sub-menu-item">
-                    <div><i class="fa-solid fa-barcode item-icon"></i>工具批次借還</div>
-                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
-                </a>
-                <a href="https://tw277711.github.io/tools-system/manager.html" class="sub-menu-item">
-                    <div><i class="fa-solid fa-chart-line item-icon"></i>未歸還工具監控看板</div>
-                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-
+    <!-- 設計圖面彈出層 -->
     <div class="modal-overlay" id="designModal" onclick="closeDesignMenu(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-header">
@@ -525,61 +559,13 @@
                     <div><i class="fa-solid fa-gears item-icon"></i>產品圖面</div>
                     <i class="fa-solid fa-chevron-right arrow-icon"></i>
                 </a>
-                <a href="https://22487603.sharepoint.com/:f:/s/msteams_218d12/IgB41VW7cufSRrFC1yO15_bJAcgpUzUss2IUhAH3e6buI5Q?e=FA5ioB" target="_blank" class="sub-menu-item">
+                <a href="https://22487603.sharepoint.com/:f:/s/msteams_218d12/IgB41VW7cufSRrFC1yO15_bJAcgpUzUss2IUhAH3e6buI5Q?e=J2ViTz" target="_blank" class="sub-menu-item">
                     <div><i class="fa-solid fa-user-gear item-icon"></i>客戶圖面</div>
                     <i class="fa-solid fa-chevron-right arrow-icon"></i>
                 </a>
                 <a href="#" target="_blank" class="sub-menu-item">
                     <div><i class="fa-solid fa-folder-open item-icon"></i>其他圖面</div>
                     <i class="fa-solid fa-chevron-right arrow-icon"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="manufactureModal" onclick="closeManufactureMenu(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <div class="modal-header">
-                <h2><i class="fa-solid fa-industry"></i> 產品製造選單</h2>
-                <button class="close-btn" onclick="toggleModal('manufactureModal', false)">&times;</button>
-            </div>
-            <div class="menu-breadcrumb" id="m-breadcrumb" style="display: none;">
-                <span class="clickable" onclick="goToLayer2()">產品製造</span> <i class="fa-solid fa-chevron-right" style="font-size:0.7rem;"></i> <span id="current-node">製成品</span>
-            </div>
-            <div class="sub-menu-list" id="m-layer2">
-                <div class="sub-menu-item" onclick="goToLayer3('製成品')">
-                    <div><i class="fa-solid fa-boxes-stacked item-icon"></i>製成品</div>
-                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
-                </div>
-                <div class="sub-menu-item" onclick="showBuildAlert('工件')">
-                    <div><i class="fa-solid fa-puzzle-piece item-icon"></i>工件</div>
-                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
-                </div>
-                <div class="sub-menu-item" onclick="showBuildAlert('工站')">
-                    <div><i class="fa-solid fa-trowel-bricks item-icon"></i>工站</div>
-                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
-                </div>
-            </div>
-            <div class="sub-menu-list" id="m-layer3" style="display: none;">
-                <a href="https://script.google.com/macros/s/AKfycbwnJ6i8f9J45rU57rqNanqbFf0gj4OIX4k8erQ70E0iFT7Yhbr1UD9LAIL2i0KiQi5j/exec" target="_blank" class="sub-menu-item">
-                    <div><i class="fa-solid fa-fire-burner item-icon"></i>熱媒鍋爐</div>
-                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
-                </a>
-                <a href="#" target="_blank" class="sub-menu-item">
-                    <div><i class="fa-solid fa-retweet item-icon"></i>熱交換器</div>
-                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
-                </a>
-                <a href="#" target="_blank" class="sub-menu-item">
-                    <div><i class="fa-solid fa-database item-icon"></i>桶槽</div>
-                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
-                </a>
-                <a href="#" target="_blank" class="sub-menu-item">
-                    <div><i class="fa-solid fa-faucet-drip item-icon"></i>泵組</div>
-                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
-                </a>
-                <a href="#" target="_blank" class="sub-menu-item">
-                    <div><i class="fa-solid fa-gopuram item-icon"></i>煙囪</div>
-                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
                 </a>
             </div>
         </div>
@@ -593,6 +579,7 @@
 </footer>
 
 <script>
+    // 頁面切換控制邏輯
     function showSchedule() {
         document.getElementById('main-menu').style.display = 'none';
         document.getElementById('schedule-view').style.display = 'block';
@@ -600,10 +587,9 @@
         document.getElementById('header-title').innerText = '生產調度看板';
     }
 
-    /* 點擊看板後的重定向 */
     function showScheduleFromModal() {
-        toggleModal('orderModal', false);
-        setTimeout(showSchedule, 200);
+        toggleModal('orderModal', false); // 關閉選單
+        setTimeout(showSchedule, 200);   // 平滑切換到靜態看板畫面
     }
 
     function showMenu() {
@@ -613,47 +599,38 @@
         document.getElementById('header-title').innerText = '利峰行動工作台';
     }
 
+    // 控制彈出層的顯示與隱藏
     function toggleModal(modalId, show) {
         const modal = document.getElementById(modalId);
         if (show) { 
             modal.classList.add('active'); 
         } else { 
             modal.classList.remove('active'); 
-            if(modalId === 'manufactureModal') {
-                setTimeout(goToLayer2, 300);
+            if (modalId === 'orderModal') {
+                setTimeout(goToOrderLayer2, 300); // 關閉訂單選單時隱性重置回第二層
             }
         }
     }
-
+    
+    // 開關控制代行
     function openOrderMenu() { toggleModal('orderModal', true); }
     function closeOrderMenu(event) { toggleModal('orderModal', false); }
-
-    /* 🟢 物料管理開關控制 */
-    function openMaterialMenu() { toggleModal('materialModal', true); }
-    function closeMaterialMenu(event) { toggleModal('materialModal', false); }
-
-    function openToolsMenu() { toggleModal('toolsModal', true); }
-    function closeToolsMenu(event) { toggleModal('toolsModal', false); }
-
+    
     function openDesignMenu() { toggleModal('designModal', true); }
     function closeDesignMenu(event) { toggleModal('designModal', false); }
 
-    function openManufactureMenu() { toggleModal('manufactureModal', true); }
-    function closeManufactureMenu(event) { toggleModal('manufactureModal', false); }
+    // 訂單排程多層切換邏輯
+    function goToOrderLayer3(nodeName) {
+        document.getElementById('o-layer2').style.display = 'none';
+        document.getElementById('o-layer3').style.display = 'flex';
+        document.getElementById('o-breadcrumb').style.display = 'flex';
+        document.getElementById('order-current-node').innerText = nodeName;
+    }
 
-    function goToLayer3(nodeName) {
-        document.getElementById('m-layer2').style.display = 'none';
-        document.getElementById('m-layer3').style.display = 'flex';
-        document.getElementById('m-breadcrumb').style.display = 'flex';
-        document.getElementById('current-node').innerText = nodeName;
-    }
-    function goToLayer2() {
-        document.getElementById('m-layer2').style.display = 'flex';
-        document.getElementById('m-layer3').style.display = 'none';
-        document.getElementById('m-breadcrumb').style.display = 'none';
-    }
-    function showBuildAlert(name) {
-        alert('【' + name + '】模組目前正在規劃建置中，敬請期待！');
+    function goToOrderLayer2() {
+        document.getElementById('o-layer2').style.display = 'flex';
+        document.getElementById('o-layer3').style.display = 'none';
+        document.getElementById('o-breadcrumb').style.display = 'none';
     }
 </script>
 
