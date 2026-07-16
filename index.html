@@ -255,7 +255,7 @@
         }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
         
-        /* 🎯 鎖定底部彈出層完美置中與防歪寬度配比 */
+        /* 鎖定底部彈出層置中與寬度配比 */
         .modal-content { 
             background-color: #1e293b; 
             width: 100%; 
@@ -271,21 +271,11 @@
             align-items: center;
         }
         .modal-overlay.active .modal-content { transform: translateY(0); }
-        
-        /* 確保選單頭部橫向 100% */
-        .modal-header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            margin-bottom: 25px; 
-            padding-bottom: 10px; 
-            border-bottom: 1px solid #334155; 
-            width: 100%;
-        }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 10px; border-bottom: 1px solid #334155; width: 100%; }
         .modal-header h2 { font-size: 1.2rem; color: #38bdf8; display: flex; align-items: center; gap: 10px; }
         .close-btn { background: none; border: none; color: #94a3b8; font-size: 1.5rem; cursor: pointer; padding: 5px; }
         
-        /* 🎯 彈出選單清單：強制子按鈕 100% 鋪滿、全面橫向置中 */
+        /* 彈出選單清單：確保子按鈕 100% 寬度完美置中 */
         .sub-menu-list { display: flex; flex-direction: column; gap: 12px; width: 100%; }
         .sub-menu-item { background-color: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; color: #f8fafc; font-weight: 500; width: 100%; transition: all 0.2s; cursor: pointer; }
         .sub-menu-item i.item-icon { margin-right: 15px; font-size: 1.2rem; }
@@ -328,13 +318,6 @@
             </div>
             <span>物料管理</span>
         </div>
-        
-        <a href="https://apps.powerapps.com/play/e/default-3e94ccc2-1343-416a-84fc-b26340a644f5/a/3026c973-b77c-44bc-a35e-f0dd4ea44483?tenantId=3e94ccc2-1343-416a-84fc-b26340a644f5&hint=2df38572-5b1f-430a-9777-63486bc22add&sourcetime=1782786105356" class="tile-btn">
-            <div class="icon-wrapper">
-                <i class="fa-solid fa-list-check"></i>
-            </div>
-            <span>外勤維修保養</span>
-        </a>
 
         <div class="tile-btn tools-btn" onclick="openToolsMenu()">
             <div class="icon-wrapper">
@@ -342,6 +325,13 @@
             </div>
             <span>工具資產</span>
         </div>
+        
+        <a href="https://apps.powerapps.com/play/e/default-3e94ccc2-1343-416a-84fc-b26340a644f5/a/3026c973-b77c-44bc-a35e-f0dd4ea44483?tenantId=3e94ccc2-1343-416a-84fc-b26340a644f5&hint=2df38572-5b1f-430a-9777-63486bc22add&sourcetime=1782786105356" class="tile-btn">
+            <div class="icon-wrapper">
+                <i class="fa-solid fa-list-check"></i>
+            </div>
+            <span>外勤維修保養</span>
+        </a>
         
         <div class="tile-btn design-btn" onclick="openDesignMenu()">
             <div class="icon-wrapper">
@@ -506,7 +496,7 @@
                 </a>
                 <a href="https://script.google.com/macros/s/AKfycbzn7KsUUOlj4QeZXjQwfl0OpWameleqPh1h4_EcQYEvSocFrRye9zlWlJQTyol7JtsJ/exec?view=dash" target="_blank" class="sub-menu-item">
                     <div><i class="fa-solid fa-table-list item-icon"></i>決策指揮看板</div>
-                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
+                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
                 </a>
             </div>
         </div>
@@ -705,7 +695,8 @@
         document.getElementById('d-breadcrumb').style.display = 'none';
     }
 
-    UX/UI: 產品圖面麵包屑控制
+    // 🟢 已修正：加上註解斜線，排除 JavaScript 語法錯誤
+    // UX/UI: 產品圖面麵包屑控制
     function goToDesignLayer4(nodeName) {
         document.getElementById('d-layer3').style.display = 'none';
         document.getElementById('d-layer4').style.display = 'flex';
