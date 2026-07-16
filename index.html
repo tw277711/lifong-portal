@@ -77,7 +77,7 @@
             display: none;
         }
 
-        /* 主內容區：首頁精簡六宮格 */
+        /* 主內容區：首頁精簡五宮格 */
         #main-menu {
             flex: 1;
             padding: 20px;
@@ -136,8 +136,7 @@
         .tile-btn.order-btn .icon-wrapper { color: #eab308; } /* 訂單排程：黃金 */
         .tile-btn.material-btn .icon-wrapper { color: #f97316; } /* 物料管理：溫暖橘 */
         .tile-btn.tools-btn .icon-wrapper { color: #38bdf8; } /* 工具資產：亮藍 */
-        .tile-btn.design-btn .icon-wrapper { color: #a855f7; } /* 設計：紫色 */
-        .tile-btn.manufacture-btn .icon-wrapper { color: #10b981; } /* 產品製造：翡翠綠 */
+        .tile-btn.design-btn .icon-wrapper { color: #a855f7; } /* 產品設計：紫色 */
 
         .tile-btn span {
             font-size: 0.95rem;
@@ -270,15 +269,15 @@
         #materialModal .sub-menu-item i.item-icon { color: #f97316; }
         #toolsModal .sub-menu-item i.item-icon { color: #38bdf8; }
         #designModal .sub-menu-item i.item-icon { color: #a855f7; }
-        #manufactureModal .sub-menu-item i.item-icon { color: #10b981; }
         
         .sub-menu-item i.arrow-icon { color: #64748b; font-size: 0.9rem; }
         .sub-menu-item:active { background-color: #334155; border-color: #38bdf8; transform: scale(0.98); }
 
         .menu-breadcrumb { font-size: 0.9rem; color: #94a3b8; margin-bottom: 15px; display: flex; align-items: center; gap: 5px; }
         .menu-breadcrumb span.clickable { color: #10b981; cursor: pointer; text-decoration: underline; }
-        /* 訂單排程麵包屑客製顏色 */
+        /* 訂單與設計麵包屑客製顏色 */
         #o-breadcrumb span.clickable { color: #eab308; }
+        #d-breadcrumb span.clickable { color: #a855f7; }
     </style>
 </head>
 <body>
@@ -322,14 +321,7 @@
             <div class="icon-wrapper">
                 <i class="fa-solid fa-compass-drafting"></i>
             </div>
-            <span>設計</span>
-        </div>
-
-        <div class="tile-btn manufacture-btn" onclick="openManufactureMenu()">
-            <div class="icon-wrapper">
-                <i class="fa-solid fa-industry"></i>
-            </div>
-            <span>產品製造</span>
+            <span>產品設計</span>
         </div>
     </main>
 
@@ -463,12 +455,12 @@
             </div>
 
             <div class="menu-breadcrumb" id="o-breadcrumb" style="display: none;">
-                <span class="clickable" onclick="goToOrderLayer2()">訂單排程</span> <i class="fa-solid fa-chevron-right" style="font-size:0.7rem;"></i> <span id="order-current-node">生產調度管理</span>
+                <span class="clickable" onclick="goToOrderLayer2()">訂單排程</span> <i class="fa-solid fa-chevron-right" style="font-size:0.7rem;"></i> <span id="order-current-node">鍋爐製程管理</span>
             </div>
 
             <div class="sub-menu-list" id="o-layer2">
-                <div class="sub-menu-item" onclick="goToOrderLayer3('生產調度管理')">
-                    <div><i class="fa-solid fa-sliders item-icon"></i>生產調度管理</div>
+                <div class="sub-menu-item" onclick="goToOrderLayer3('鍋爐製程管理')">
+                    <div><i class="fa-solid fa-sliders item-icon"></i>鍋爐製程管理</div>
                     <i class="fa-solid fa-chevron-right arrow-icon"></i>
                 </div>
                 <a href="https://apps.powerapps.com/play/e/default-3e94ccc2-1343-416a-84fc-b26340a644f5/a/9391d51a-a5c7-49f3-b700-4a567b8c5d4f?tenantId=3e94ccc2-1343-416a-84fc-b26340a644f5&hint=fd9253ed-d73f-4b32-a847-2fb52c26406d&sourcetime=1782800532492" class="sub-menu-item">
@@ -479,15 +471,15 @@
 
             <div class="sub-menu-list" id="o-layer3" style="display: none;">
                 <a href="https://script.google.com/macros/s/AKfycbzn7KsUUOlj4QeZXjQwfl0OpWameleqPh1h4_EcQYEvSocFrRye9zlWlJQTyol7JtsJ/exec" target="_blank" class="sub-menu-item">
-                    <div><i class="fa-solid fa-list-check item-icon"></i>工站作業回報</div>
+                    <div><i class="fa-solid fa-list-check item-icon"></i>工站回報作業</div>
                     <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
                 </a>
                 <a href="https://script.google.com/macros/s/AKfycbzn7KsUUOlj4QeZXjQwfl0OpWameleqPh1h4_EcQYEvSocFrRye9zlWlJQTyol7JtsJ/exec?view=mgmt" target="_blank" class="sub-menu-item">
-                    <div><i class="fa-solid fa-user-gear item-icon"></i>生管即時調度</div>
+                    <div><i class="fa-solid fa-user-gear item-icon"></i>生管調度作業</div>
                     <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
                 </a>
-                <a href="https://script.google.com/macros/s/AKfycbzn7KsUUOlj4QeZXjQwfl0OpWameleqPh1h4_EcQYEvSocFrRye9zlWlJQTyol7JtsJ/exec?view=dash" target="_blank" class="sub-menu-item">
-                    <div><i class="fa-solid fa-table-list item-icon"></i>調度看板</div>
+                <div class="sub-menu-item" onclick="showScheduleFromModal()">
+                    <div><i class="fa-solid fa-table-list item-icon"></i>決策指揮看板</div>
                     <i class="fa-solid fa-chevron-right arrow-icon"></i>
                 </div>
             </div>
@@ -539,37 +531,31 @@
     <div class="modal-overlay" id="designModal" onclick="closeDesignMenu(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-header">
-                <h2><i class="fa-solid fa-compass-drafting"></i> 設計圖面選單</h2>
+                <h2><i class="fa-solid fa-compass-drafting"></i> 產品設計選單</h2>
                 <button class="close-btn" onclick="toggleModal('designModal', false)">&times;</button>
             </div>
-            <div class="sub-menu-list">
-                <a href="https://22487603.sharepoint.com/:f:/s/msteams_218d12/IgDaZqafBTAeQarD4IpEG-_QAdvGd4k4Mnk-5rlfvewXNoA?e=syM9aS" target="_blank" class="sub-menu-item">
+
+            <div class="menu-breadcrumb" id="d-breadcrumb" style="display: none;">
+                <span class="clickable" onclick="goToDesignLayer2()">產品設計</span> <i class="fa-solid fa-chevron-right" style="font-size:0.7rem;"></i> <span id="design-current-node">產品圖面</span>
+            </div>
+
+            <div class="sub-menu-list" id="d-layer2">
+                <div class="sub-menu-item" onclick="goToDesignLayer3('產品圖面')">
                     <div><i class="fa-solid fa-gears item-icon"></i>產品圖面</div>
                     <i class="fa-solid fa-chevron-right arrow-icon"></i>
-                </a>
+                </div>
                 <a href="https://22487603.sharepoint.com/:f:/s/msteams_218d12/IgB41VW7cufSRrFC1yO15_bJAcgpUzUss2IUhAH3e6buI5Q?e=FA5ioB" target="_blank" class="sub-menu-item">
                     <div><i class="fa-solid fa-user-gear item-icon"></i>客戶圖面</div>
-                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
                 </a>
                 <a href="#" target="_blank" class="sub-menu-item">
                     <div><i class="fa-solid fa-folder-open item-icon"></i>其他圖面</div>
-                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
                 </a>
             </div>
-        </div>
-    </div>
 
-    <div class="modal-overlay" id="manufactureModal" onclick="closeManufactureMenu(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <div class="modal-header">
-                <h2><i class="fa-solid fa-industry"></i> 產品製造選單</h2>
-                <button class="close-btn" onclick="toggleModal('manufactureModal', false)">&times;</button>
-            </div>
-            <div class="menu-breadcrumb" id="m-breadcrumb" style="display: none;">
-                <span class="clickable" onclick="goToLayer2()">產品製造</span> <i class="fa-solid fa-chevron-right" style="font-size:0.7rem;"></i> <span id="current-node">製成品</span>
-            </div>
-            <div class="sub-menu-list" id="m-layer2">
-                <div class="sub-menu-item" onclick="goToLayer3('製成品')">
+            <div class="sub-menu-list" id="d-layer3" style="display: none;">
+                <div class="sub-menu-item" onclick="goToDesignLayer4('製成品')">
                     <div><i class="fa-solid fa-boxes-stacked item-icon"></i>製成品</div>
                     <i class="fa-solid fa-chevron-right arrow-icon"></i>
                 </div>
@@ -581,8 +567,13 @@
                     <div><i class="fa-solid fa-trowel-bricks item-icon"></i>工站</div>
                     <i class="fa-solid fa-chevron-right arrow-icon"></i>
                 </div>
+                <a href="https://22487603.sharepoint.com/:f:/s/msteams_218d12/IgDaZqafBTAeQarD4IpEG-_QAdvGd4k4Mnk-5rlfvewXNoA?e=syM9aS" target="_blank" class="sub-menu-item">
+                    <div><i class="fa-solid fa-folder-tree item-icon"></i>SP folder</div>
+                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
+                </a>
             </div>
-            <div class="sub-menu-list" id="m-layer3" style="display: none;">
+
+            <div class="sub-menu-list" id="d-layer4" style="display: none;">
                 <a href="https://script.google.com/macros/s/AKfycbwnJ6i8f9j45rU57rqNanqBfF0gj4OlX4k8erQ70E0iFT7Yhb11UD9LAlL2i0KiQi5j/exec" target="_blank" class="sub-menu-item">
                     <div><i class="fa-solid fa-fire-burner item-icon"></i>熱媒鍋爐</div>
                     <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
@@ -604,6 +595,7 @@
                     <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
                 </a>
             </div>
+
         </div>
     </div>
 
@@ -622,7 +614,6 @@
         document.getElementById('header-title').innerText = '生產調度看板';
     }
 
-    /* 點擊看板後的重定向 */
     function showScheduleFromModal() {
         toggleModal('orderModal', false);
         setTimeout(showSchedule, 200);
@@ -641,11 +632,11 @@
             modal.classList.add('active'); 
         } else { 
             modal.classList.remove('active'); 
-            if(modalId === 'manufactureModal') {
-                setTimeout(goToLayer2, 300);
-            }
             if(modalId === 'orderModal') {
                 setTimeout(goToOrderLayer2, 300); // 關閉訂單選單時隱性重置回第二層
+            }
+            if(modalId === 'designModal') {
+                setTimeout(goToDesignLayer2, 300); // 關閉設計選單時隱性重置回第二層
             }
         }
     }
@@ -662,9 +653,6 @@
     function openDesignMenu() { toggleModal('designModal', true); }
     function closeDesignMenu(event) { toggleModal('designModal', false); }
 
-    function openManufactureMenu() { toggleModal('manufactureModal', true); }
-    function closeManufactureMenu(event) { toggleModal('manufactureModal', false); }
-
     /* 訂單排程多層切換邏輯 */
     function goToOrderLayer3(nodeName) {
         document.getElementById('o-layer2').style.display = 'none';
@@ -678,17 +666,24 @@
         document.getElementById('o-breadcrumb').style.display = 'none';
     }
 
-    /* 產品製造多層切換邏輯 */
-    function goToLayer3(nodeName) {
-        document.getElementById('m-layer2').style.display = 'none';
-        document.getElementById('m-layer3').style.display = 'flex';
-        document.getElementById('m-breadcrumb').style.display = 'flex';
-        document.getElementById('current-node').innerText = nodeName;
+    /* 產品設計多層切換邏輯 */
+    function goToDesignLayer3(nodeName) {
+        document.getElementById('d-layer2').style.display = 'none';
+        document.getElementById('d-layer3').style.display = 'flex';
+        document.getElementById('d-breadcrumb').style.display = 'flex';
+        document.getElementById('d-breadcrumb').innerHTML = `<span class="clickable" onclick="goToDesignLayer2()">產品設計</span> <i class="fa-solid fa-chevron-right" style="font-size:0.7rem;"></i> <span id="design-current-node">${nodeName}</span>`;
     }
-    function goToLayer2() {
-        document.getElementById('m-layer2').style.display = 'flex';
-        document.getElementById('m-layer3').style.display = 'none';
-        document.getElementById('m-breadcrumb').style.display = 'none';
+    function goToDesignLayer2() {
+        document.getElementById('d-layer2').style.display = 'flex';
+        document.getElementById('d-layer3').style.display = 'none';
+        document.getElementById('d-layer4').style.display = 'none';
+        document.getElementById('d-breadcrumb').style.display = 'none';
+    }
+    function goToDesignLayer4(nodeName) {
+        document.getElementById('d-layer3').style.display = 'none';
+        document.getElementById('d-layer4').style.display = 'flex';
+        // 麵包屑延伸到第四層
+        document.getElementById('d-breadcrumb').innerHTML = `<span class="clickable" onclick="goToDesignLayer2()">產品設計</span> <i class="fa-solid fa-chevron-right" style="font-size:0.7rem;"></i> <span class="clickable" onclick="goToDesignLayer3('產品圖面')">產品圖面</span> <i class="fa-solid fa-chevron-right" style="font-size:0.7rem;"></i> <span id="design-current-node">${nodeName}</span>`;
     }
     
     function showBuildAlert(name) {
