@@ -666,10 +666,11 @@
         document.getElementById('o-breadcrumb').style.display = 'none';
     }
 
-    /* 產品設計多層切換邏輯 */
+// 🟢 修正：回到第三層時，強制將第四層 (d-layer4) 隱藏
     function goToDesignLayer3(nodeName) {
         document.getElementById('d-layer2').style.display = 'none';
         document.getElementById('d-layer3').style.display = 'flex';
+        document.getElementById('d-layer4').style.display = 'none'; // 👈 補上這行，把第四層藏起來！
         document.getElementById('d-breadcrumb').style.display = 'flex';
         document.getElementById('d-breadcrumb').innerHTML = `<span class="clickable" onclick="goToDesignLayer2()">產品設計</span> <i class="fa-solid fa-chevron-right" style="font-size:0.7rem;"></i> <span id="design-current-node">${nodeName}</span>`;
     }
