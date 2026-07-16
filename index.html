@@ -77,7 +77,7 @@
             display: none;
         }
 
-        /* 主內容區：首頁精簡五宮格 */
+        /* 主內容區：首頁精簡五宮格網格 */
         #main-menu {
             flex: 1;
             padding: 20px;
@@ -254,14 +254,27 @@
             transition: opacity 0.3s ease;
         }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-content { background-color: #1e293b; width: 100%; max-width: 600px; border-top-left-radius: 24px; border-top-right-radius: 24px; padding: 30px 20px; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.1, 0.76, 0.55, 0.94); }
+        
+        /* 鎖定底部彈出層置中與寬度配比 */
+        .modal-content { 
+            background-color: #1e293b; 
+            width: 100%; 
+            max-width: 600px; 
+            border-top-left-radius: 24px; 
+            border-top-right-radius: 24px; 
+            padding: 30px 20px; 
+            margin: 0 auto;
+            transform: translateY(100%); 
+            transition: transform 0.3s cubic-bezier(0.1, 0.76, 0.55, 0.94); 
+        }
         .modal-overlay.active .modal-content { transform: translateY(0); }
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 10px; border-bottom: 1px solid #334155; }
         .modal-header h2 { font-size: 1.2rem; color: #38bdf8; display: flex; align-items: center; gap: 10px; }
         .close-btn { background: none; border: none; color: #94a3b8; font-size: 1.5rem; cursor: pointer; padding: 5px; }
         
-        .sub-menu-list { display: flex; flex-direction: column; gap: 12px; }
-        .sub-menu-item { background-color: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; color: #f8fafc; font-weight: 500; transition: all 0.2s; cursor: pointer; }
+        /* 彈出選單清單：確保子按鈕 100% 寬度完美置中 */
+        .sub-menu-list { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+        .sub-menu-item { background-color: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; color: #f8fafc; font-weight: 500; width: 100%; transition: all 0.2s; cursor: pointer; }
         .sub-menu-item i.item-icon { margin-right: 15px; font-size: 1.2rem; }
         
         /* 彈出層各模組專屬顏色 */
@@ -273,7 +286,7 @@
         .sub-menu-item i.arrow-icon { color: #64748b; font-size: 0.9rem; }
         .sub-menu-item:active { background-color: #334155; border-color: #38bdf8; transform: scale(0.98); }
 
-        .menu-breadcrumb { font-size: 0.9rem; color: #94a3b8; margin-bottom: 15px; display: flex; align-items: center; gap: 5px; }
+        .menu-breadcrumb { font-size: 0.9rem; color: #94a3b8; margin-bottom: 15px; display: flex; align-items: center; gap: 5px; width: 100%; text-align: left; }
         .menu-breadcrumb span.clickable { color: #10b981; cursor: pointer; text-decoration: underline; }
         /* 訂單與設計麵包屑客製顏色 */
         #o-breadcrumb span.clickable { color: #eab308; }
@@ -302,13 +315,6 @@
             </div>
             <span>物料管理</span>
         </div>
-        
-        <a href="https://apps.powerapps.com/play/e/default-3e94ccc2-1343-416a-84fc-b26340a644f5/a/3026c973-b77c-44bc-a35e-f0dd4ea44483?tenantId=3e94ccc2-1343-416a-84fc-b26340a644f5&hint=2df38572-5b1f-430a-9777-63486bc22add&sourcetime=1782786105356" class="tile-btn">
-            <div class="icon-wrapper">
-                <i class="fa-solid fa-list-check"></i>
-            </div>
-            <span>外勤維修保養</span>
-        </a>
 
         <div class="tile-btn tools-btn" onclick="openToolsMenu()">
             <div class="icon-wrapper">
@@ -316,6 +322,13 @@
             </div>
             <span>工具資產</span>
         </div>
+        
+        <a href="https://apps.powerapps.com/play/e/default-3e94ccc2-1343-416a-84fc-b26340a644f5/a/3026c973-b77c-44bc-a35e-f0dd4ea44483?tenantId=3e94ccc2-1343-416a-84fc-b26340a644f5&hint=2df38572-5b1f-430a-9777-63486bc22add&sourcetime=1782786105356" class="tile-btn">
+            <div class="icon-wrapper">
+                <i class="fa-solid fa-list-check"></i>
+            </div>
+            <span>外勤維修保養</span>
+        </a>
         
         <div class="tile-btn design-btn" onclick="openDesignMenu()">
             <div class="icon-wrapper">
@@ -478,7 +491,7 @@
                     <div><i class="fa-solid fa-user-gear item-icon"></i>生管調度作業</div>
                     <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
                 </a>
-                <a href="https://script.google.com/macros/s/AKfycbzn7KsUUOlj4QeZXjQwfl0OpWameleqPh1h4_EcQYEvSocFrRye9zlWlJQTyol7JtsJ/exec?view=dash" target="_blank" class="sub-menu-item">
+                <div class="sub-menu-item" onclick="showScheduleFromModal()">
                     <div><i class="fa-solid fa-table-list item-icon"></i>決策指揮看板</div>
                     <i class="fa-solid fa-chevron-right arrow-icon"></i>
                 </div>
@@ -535,8 +548,7 @@
                 <button class="close-btn" onclick="toggleModal('designModal', false)">&times;</button>
             </div>
 
-            <div class="menu-breadcrumb" id="d-breadcrumb" style="display: none;">
-                </div>
+            <div class="menu-breadcrumb" id="d-breadcrumb" style="display: none;"></div>
 
             <div class="sub-menu-list" id="d-layer2">
                 <div class="sub-menu-item" onclick="goToDesignLayer3('產品圖面')">
@@ -573,7 +585,7 @@
             </div>
 
             <div class="sub-menu-list" id="d-layer4" style="display: none;">
-                <a href="https://script.google.com/macros/s/AKfycbwnJ6i8f9J45rU57rqNanqbFf0gj4OIX4k8erQ70E0iFT7Yhbr1UD9LAIL2i0KiQi5j/exec" target="_blank" class="sub-menu-item">
+                <a href="https://script.google.com/macros/s/AKfycbx10IVO6Io8WwP9n1hj4zSm7344YgGH-85ywzvSd1d6rH1xIRSZ5ysn0D2waOCtjX_bdg/exec" target="_blank" class="sub-menu-item">
                     <div><i class="fa-solid fa-fire-burner item-icon"></i>熱媒鍋爐</div>
                     <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
                 </a>
@@ -664,14 +676,12 @@
         document.getElementById('o-breadcrumb').style.display = 'none';
     }
 
-    /* 🟢 重新改寫的相容性產品設計多層切換邏輯 */
+    /* 產品設計多層切換邏輯 */
     function goToDesignLayer3(nodeName) {
         document.getElementById('d-layer2').style.display = 'none';
         document.getElementById('d-layer3').style.display = 'flex';
-        document.getElementById('d-layer4').style.display = 'none'; // 確保第四層被徹底洗掉關閉
+        document.getElementById('d-layer4').style.display = 'none';
         document.getElementById('d-breadcrumb').style.display = 'flex';
-        
-        // 使用最安全的標準字串拼接，防止 onclick 行為失效破壞 DOM
         document.getElementById('d-breadcrumb').innerHTML = '<span class="clickable" onclick="goToDesignLayer2()">產品設計</span> <i class="fa-solid fa-chevron-right" style="font-size:0.7rem;"></i> <span id="design-current-node">' + nodeName + '</span>';
     }
 
@@ -685,8 +695,6 @@
     function goToDesignLayer4(nodeName) {
         document.getElementById('d-layer3').style.display = 'none';
         document.getElementById('d-layer4').style.display = 'flex';
-        
-        // 使用高相容性字串拼接，確保回到第三層的 onclick 綁定事件永遠存在
         document.getElementById('d-breadcrumb').innerHTML = '<span class="clickable" onclick="goToDesignLayer2()">產品設計</span> <i class="fa-solid fa-chevron-right" style="font-size:0.7rem;"></i> <span class="clickable" onclick="goToDesignLayer3(\'產品圖面\')">產品圖面</span> <i class="fa-solid fa-chevron-right" style="font-size:0.7rem;"></i> <span id="design-current-node">' + nodeName + '</span>';
     }
     
