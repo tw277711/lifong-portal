@@ -536,8 +536,7 @@
             </div>
 
             <div class="menu-breadcrumb" id="d-breadcrumb" style="display: none;">
-                <span class="clickable" onclick="goToDesignLayer2()">產品設計</span> <i class="fa-solid fa-chevron-right" style="font-size:0.7rem;"></i> <span id="design-current-node">產品圖面</span>
-            </div>
+                </div>
 
             <div class="sub-menu-list" id="d-layer2">
                 <div class="sub-menu-item" onclick="goToDesignLayer3('產品圖面')">
@@ -576,4 +575,125 @@
             <div class="sub-menu-list" id="d-layer4" style="display: none;">
                 <a href="https://script.google.com/macros/s/AKfycbx10IVO6Io8WwP9n1hj4zSm7344YgGH-85ywzvSd1d6rH1xIRSZ5ysn0D2waOCtjX_bdg/exec" target="_blank" class="sub-menu-item">
                     <div><i class="fa-solid fa-fire-burner item-icon"></i>熱媒鍋爐</div>
-                    <i class="
+                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
+                </a>
+                <div class="sub-menu-item" onclick="showBuildAlert('熱交換器')">
+                    <div><i class="fa-solid fa-retweet item-icon"></i>熱交換器</div>
+                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                </div>
+                <div class="sub-menu-item" onclick="showBuildAlert('桶槽')">
+                    <div><i class="fa-solid fa-database item-icon"></i>桶槽</div>
+                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                </div>
+                <div class="sub-menu-item" onclick="showBuildAlert('泵組')">
+                    <div><i class="fa-solid fa-faucet-drip item-icon"></i>泵組</div>
+                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                </div>
+                <div class="sub-menu-item" onclick="showBuildAlert('煙囪')">
+                    <div><i class="fa-solid fa-gopuram item-icon"></i>煙囪</div>
+                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<footer style="text-align: center; padding: 20px 15px; font-size: 0.8rem; color: #64748b; background-color: #0f172a;">
+    <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+        <img src="logo-transparent.png" alt="" style="height: 20px; width: auto; display: inline-block;">
+        <span>利峰機械有限公司 &copy; 2026</span>
+    </div>
+</footer>
+
+<script>
+    function showSchedule() {
+        document.getElementById('main-menu').style.display = 'none';
+        document.getElementById('schedule-view').style.display = 'block';
+        document.getElementById('btnBack').style.display = 'block';
+        document.getElementById('header-title').innerText = '生產調度看板';
+    }
+
+    function showScheduleFromModal() {
+        toggleModal('orderModal', false);
+        setTimeout(showSchedule, 200);
+    }
+
+    function showMenu() {
+        document.getElementById('main-menu').style.display = 'grid';
+        document.getElementById('schedule-view').style.display = 'none';
+        document.getElementById('btnBack').style.display = 'none';
+        document.getElementById('header-title').innerText = '利峰行動工作台';
+    }
+
+    function toggleModal(modalId, show) {
+        const modal = document.getElementById(modalId);
+        if (show) { 
+            modal.classList.add('active'); 
+        } else { 
+            modal.classList.remove('active'); 
+            if(modalId === 'orderModal') {
+                setTimeout(goToOrderLayer2, 300);
+            }
+            if(modalId === 'designModal') {
+                setTimeout(goToDesignLayer2, 300);
+            }
+        }
+    }
+
+    function openOrderMenu() { toggleModal('orderModal', true); }
+    function closeOrderMenu(event) { toggleModal('orderModal', false); }
+
+    function openMaterialMenu() { toggleModal('materialModal', true); }
+    function closeMaterialMenu(event) { toggleModal('materialModal', false); }
+
+    function openToolsMenu() { toggleModal('toolsModal', true); }
+    function closeToolsMenu(event) { toggleModal('toolsModal', false); }
+
+    function openDesignMenu() { toggleModal('designModal', true); }
+    function closeDesignMenu(event) { toggleModal('designModal', false); }
+
+    /* 訂單排程多層切換邏輯 */
+    function goToOrderLayer3(nodeName) {
+        document.getElementById('o-layer2').style.display = 'none';
+        document.getElementById('o-layer3').style.display = 'flex';
+        document.getElementById('o-breadcrumb').style.display = 'flex';
+        document.getElementById('order-current-node').innerText = nodeName;
+    }
+    function goToOrderLayer2() {
+        document.getElementById('o-layer2').style.display = 'flex';
+        document.getElementById('o-layer3').style.display = 'none';
+        document.getElementById('o-breadcrumb').style.display = 'none';
+    }
+
+    /* 🟢 重新改寫的相容性產品設計多層切換邏輯 */
+    function goToDesignLayer3(nodeName) {
+        document.getElementById('d-layer2').style.display = 'none';
+        document.getElementById('d-layer3').style.display = 'flex';
+        document.getElementById('d-layer4').style.display = 'none'; // 確保第四層被徹底洗掉關閉
+        document.getElementById('d-breadcrumb').style.display = 'flex';
+        
+        // 使用最安全的標準字串拼接，防止 onclick 行為失效破壞 DOM
+        document.getElementById('d-breadcrumb').innerHTML = '<span class="clickable" onclick="goToDesignLayer2()">產品設計</span> <i class="fa-solid fa-chevron-right" style="font-size:0.7rem;"></i> <span id="design-current-node">' + nodeName + '</span>';
+    }
+
+    function goToDesignLayer2() {
+        document.getElementById('d-layer2').style.display = 'flex';
+        document.getElementById('d-layer3').style.display = 'none';
+        document.getElementById('d-layer4').style.display = 'none';
+        document.getElementById('d-breadcrumb').style.display = 'none';
+    }
+
+    function goToDesignLayer4(nodeName) {
+        document.getElementById('d-layer3').style.display = 'none';
+        document.getElementById('d-layer4').style.display = 'flex';
+        
+        // 使用高相容性字串拼接，確保回到第三層的 onclick 綁定事件永遠存在
+        document.getElementById('d-breadcrumb').innerHTML = '<span class="clickable" onclick="goToDesignLayer2()">產品設計</span> <i class="fa-solid fa-chevron-right" style="font-size:0.7rem;"></i> <span class="clickable" onclick="goToDesignLayer3(\'產品圖面\')">產品圖面</span> <i class="fa-solid fa-chevron-right" style="font-size:0.7rem;"></i> <span id="design-current-node">' + nodeName + '</span>';
+    }
+    
+    function showBuildAlert(name) {
+        alert('【' + name + '】模組目前正在規劃建置中，敬請期待！');
+    }
+</script>
+
+</body>
+</html>
