@@ -45,21 +45,21 @@
             min-height: 100vh;
         }
 
-        /* 頂部標題欄：採用翡翠綠作為區隔主題色 */
+        /* 頂部標題欄：樣式完全對齊「利峰工作台」 */
         header {
             background-color: #1e293b;
             padding: 20px 15px;
             text-align: center;
             border-bottom: 3px solid #10b981; /* 翡翠綠區隔主題色 */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             position: relative;
         }
 
         header h1 {
-            font-size: 1.35rem;
+            font-size: 1.4rem; /* 完全對齊主工作台 1.4rem */
             letter-spacing: 1px;
             color: #10b981;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -67,15 +67,19 @@
         }
 
         header p {
-            font-size: 0.85rem;
+            font-size: 0.85rem; /* 完全對齊主工作台 0.85rem */
             color: #94a3b8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
 
         /* 主容器：RWD 彈性佈局 */
         main {
             flex: 1;
             padding: 25px 20px;
-            max-width: 650px;
+            max-width: 600px; /* 完全對齊主工作台寬度限制 */
             margin: 0 auto;
             width: 100%;
             display: flex;
@@ -107,7 +111,7 @@
             text-decoration: none;
             color: #f8fafc;
             transition: all 0.2s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
             position: relative;
             overflow: hidden;
             cursor: pointer;
@@ -265,7 +269,7 @@
 
         /* RWD 微調 */
         @media (max-width: 480px) {
-            header h1 { font-size: 1.15rem; }
+            header h1 { font-size: 1.25rem; }
             .action-card { padding: 16px; }
             .icon-box { width: 46px; height: 46px; font-size: 1.3rem; }
         }
@@ -275,11 +279,11 @@
 
 <header>
     <h1><i class="fa-solid fa-sliders"></i> 管理製程專區</h1>
-    <p>試營運中</p>
+    <p><i class="fa-solid fa-flask"></i> 試營運中</p>
 </header>
 
 <main>
-    <!-- 1. 生管排程調度（移至最上方） -->
+    <!-- 1. 生管排程調度 -->
     <div class="section-title">
         <i class="fa-solid fa-user-shield"></i> 生管排程調度 (受限項目)
     </div>
