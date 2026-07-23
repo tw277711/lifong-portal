@@ -50,30 +50,6 @@
             color: #94a3b8;
         }
 
-        /* 主工作台返回按鈕 */
-        .back-btn {
-            position: absolute;
-            left: 15px;
-            top: 20px;
-            background: #334155;
-            color: #f8fafc;
-            border: 1px solid #475569;
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.2s;
-        }
-
-        .back-btn:active {
-            background-color: #475569;
-            transform: scale(0.95);
-        }
-
         /* 主容器：RWD 彈性佈局 */
         main {
             flex: 1;
@@ -84,26 +60,6 @@
             display: flex;
             flex-direction: column;
             gap: 16px;
-        }
-
-        /* 現場告示/測試提示橫幅 */
-        .notice-banner {
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid #10b981;
-            border-radius: 12px;
-            padding: 12px 16px;
-            font-size: 0.88rem;
-            color: #6ee7b7;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            line-height: 1.4;
-        }
-
-        .notice-banner i {
-            font-size: 1.2rem;
-            color: #10b981;
-            flex-shrink: 0;
         }
 
         /* 區塊標題 */
@@ -289,7 +245,6 @@
         /* RWD 微調 */
         @media (max-width: 480px) {
             header h1 { font-size: 1.15rem; }
-            .back-btn span { display: none; } /* 行動裝置隱藏返回文字只留圖示 */
             .action-card { padding: 16px; }
             .icon-box { width: 46px; height: 46px; font-size: 1.3rem; }
         }
@@ -298,23 +253,11 @@
 <body>
 
 <header>
-    <a href="index.html" class="back-btn" title="返回利峰工作台">
-        <i class="fa-solid fa-arrow-left"></i>
-        <span>工作台</span>
-    </a>
     <h1><i class="fa-solid fa-sliders"></i> 管理製程專區</h1>
-    <p>現場同仁試運行與完工紀錄平台</p>
+    <p>試營運中</p>
 </header>
 
 <main>
-    <!-- 現場測試提示橫幅 -->
-    <div class="notice-banner">
-        <i class="fa-solid fa-flask"></i>
-        <div>
-            <strong>現場試運行中：</strong> 請現場同仁協助測試「工站紀錄」與「進度看板」，若有操作問題請即時回報生管。
-        </div>
-    </div>
-
     <div class="section-title">
         <i class="fa-solid fa-screws-mfg"></i> 現場作業與進度查詢
     </div>
