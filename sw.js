@@ -1,10 +1,11 @@
-const CACHE_NAME = 'lifeng-portal-v1'; // 升級版本號以刷新快取
+const CACHE_NAME = 'lifeng-portal-v2'; // 升級版本號以刷新快取
 const ASSETS = [
   './',
   'index.html',
   'manifest.json',
   'icon-192.png',
   'icon-512.png',
+  'icon-192-Management.png'
   'icon-512-Management.png'
 ];
 
