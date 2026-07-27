@@ -1,12 +1,11 @@
-const CACHE_NAME = 'lifeng-portal-v2'; // 升級版本號以刷新快取
+const CACHE_NAME = 'lifeng-portal-v1'; // 升級版本號以刷新快取
 const ASSETS = [
   './',
   'index.html',
   'manifest.json',
   'icon-192.png',
   'icon-512.png',
-  'icon-192-dark.png',
-  'icon-512-dark.png'
+  'icon-512-Management.png'
 ];
 
 // 1. 安裝 Service Worker 並預快取所有靜態資源
