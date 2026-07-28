@@ -1,6 +1,6 @@
 {
-  "name": "利峰製程管理",
-  "short_name": "製程管理",
+  "name": "利峰管理製程專區",
+  "short_name": "管理製程專區",
   "description": "利峰機械熱媒鍋爐製程管理與工站回報系統",
   "start_url": "./process-management.html",
   "display": "standalone",
