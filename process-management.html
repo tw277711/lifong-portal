@@ -24,7 +24,7 @@
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('sw.js')
-                .then(reg => console.log('管理製程 PWA 註冊成功！'))
+                .then(reg => console.log('管理製程專區 PWA 註冊成功！'))
                 .catch(err => console.log('註冊失敗：', err));
         });
     }
